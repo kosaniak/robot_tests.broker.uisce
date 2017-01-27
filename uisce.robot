@@ -328,7 +328,7 @@ Login
     ...    ${ARGUMENTS[1]} = ${TENDER_UAID}
     ...    ${ARGUMENTS[2]} == fieldname
     ...    ${ARGUMENTS[3]} == fieldvalue
-    ums.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
+    uisce.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
     Click Element    id = update-btn
     Input Text    ${locator.edit.${ARGUMENTS[2]}}    ${ARGUMENTS[3]}
     Click Element    id=submissive-btn
