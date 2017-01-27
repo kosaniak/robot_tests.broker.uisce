@@ -5,68 +5,65 @@ Library           Collections
 Library           uisce_service.py
 
 *** Variables ***
-${locator.edit.description}    css = div.table > tr : nth-child(4) > td
-${locator.title}    css = div.table > tr : nth-child(3) > td
-${locator.description}    css = div.table > tr : nth-child(4) > td
-${locator.minimalStep.amount}    css = div.table > tr : nth-child(17) > td
-${locator.value.amount}    css = div.table > tr : nth-child(11) > td
-${locator.value.valueAddedTaxIncluded}    id=cbPosition_value_valueAddedTaxIncluded
-${locator.value.currency}    id=tslPosition_value_currency
-${locator.auctionPeriod.startDate}    css = div.table > tr : nth-child(24) > td
-${locator.enquiryPeriod.startDate}    css = div.table > tr : nth-child(20) > td
-${locator.enquiryPeriod.endDate}    css = div.table > tr : nth-child(21) > td
-${locator.tenderPeriod.startDate}    css = div.table > tr : nth-child(22) > td
-${locator.tenderPeriod.endDate}    css = div.table > tr : nth-child(23) > td
-${locator.tenderId}    css = div.table > tr : nth-child(6) > td
-${locator.procuringEntity.name}    css = div.table > tr : nth-child(10) > td
-${locator.dgf}    номер фгв
-${locator.dgfDecisionID}    id=tePosition_dgfDecisionID
-${locator.dgfDecisionDate}    id=tdtpPosition_dgfDecisionDate
+${locator.edit.description}    id = auction-description
+${locator.title}    id = auction-title
+${locator.description}    id = auction-description
+${locator.minimalStep.amount}    id = auction-minimalStep_amount
+${locator.value.amount}    id = auction_value_amount
+${locator.value.valueAddedTaxIncluded}    id=auction-valueAddedTaxIncluded
+${locator.value.currency}    id=auction-minimalStep_currency
+${locator.auctionPeriod.startDate}    id = auction-auctionPeriod_startDate
+${locator.enquiryPeriod.startDate}    id = auction-enquiryPeriod_startDate
+${locator.enquiryPeriod.endDate}    id = auction-enquiryPeriod_endDate
+${locator.tenderPeriod.startDate}    id = auction-tenderPeriod_startDate
+${locator.tenderPeriod.endDate}    id = auction-tenderPeriod_endDate
+${locator.tenderId}    id = auction-auctionID
+${locator.procuringEntity.name}    id = auction-procuringEntity_name
+${locator.dgf}    id = auction-dgfID
+${locator.dgfDecisionID}    id=auction-dgfDecisionID
+${locator.dgfDecisionDate}    id=auction-dgfDecisionDate
 ${locator.eligibilityCriteria}    id=критерії оцінки
-${locator.tenderAttempts}    id=tPosition_tenderAttempts
-${locator.procurementMethodType}    id=tPosition_procurementMethodType
-${locator.items[0].quantity}    id=tew_item_0_quantity
-${locator.items[0].description}    id=tew_item_0_description
-${locator.items[0].unit.code}    id=tw_item_0_unit_code
-${locator.items[0].unit.name}    id=tslw_item_0_unit_code
-${locator.items[0].deliveryAddress.postalCode}    id=tw_item_0_Address_short
-${locator.items[0].deliveryAddress.countryName}    id=tw_item_0_Address_short
-${locator.items[0].deliveryAddress.region}    id=tw_item_0_Address_short
-${locator.items[0].deliveryAddress.locality}    id=tw_item_0_Address_short
-${locator.items[0].deliveryAddress.streetAddress}    id=tw_item_0_Address_short
-${locator.items[0].deliveryDate.endDate}    id=tdtpw_item_0_deliveryDate_endDate_Date
+${locator.tenderAttempts}    id=auction-tenderAttempts
+${locator.procurementMethodType}    id=auction-procurementMethodType
+${locator.items[0].quantity}    id=item-quantity-1
+${locator.items[0].description}    id = item-description-1
+${locator.items[0].unit.code}    id = item-unit_code1
+${locator.items[0].unit.name}    id = item-unit_name-1
+${locator.items[0].deliveryAddress.postalCode}    id=item-postalCode1
+${locator.items[0].deliveryAddress.region}    id=item-region1
+${locator.items[0].deliveryAddress.locality}    id=item-locality1
+${locator.items[0].deliveryAddress.streetAddress}    id=item-streetAddress1
 ${locator.items[0].classification.scheme}    id=tw_item_0_classification_scheme
-${locator.items[0].classification.id}    id=tew_item_0_classification_id
-${locator.items[0].classification.description}    id=tw_item_0_classification_description
+${locator.items[0].classification.id}    id = item-classification_id1
+${locator.items[0].classification.description}    id = item-classification_description1
 ${locator.items[0].additionalClassifications[0].scheme}    id=tw_item_0_additionalClassifications_description
 ${locator.items[0].additionalClassifications[0].id}    id=tew_item_0_additionalClassifications_id
 ${locator.items[0].additionalClassifications[0].description}    id=tw_item_0_additionalClassifications_description
-${locator.items[1].description}    id=tew_item_1_description
-${locator.items[1].classification.id}    id=tew_item_1_classification_id
-${locator.items[1].classification.description}    id=tw_item_1_classification_description
+${locator.items[1].description}    id = item-description-2
+${locator.items[1].classification.id}    id = item-classification_id2
+${locator.items[1].classification.description}    id = item-classification_description2
 ${locator.items[1].classification.scheme}    id=tw_item_1_classification_scheme
-${locator.items[1].unit.code}    id=tw_item_1_unit_code
-${locator.items[1].unit.name}    id=tslw_item_1_unit_code
+${locator.items[1].unit.code}    id = item-unit_code2
+${locator.items[1].unit.name}    id=item-unit_name-2
 ${locator.items[1].quantity}    id=tew_item_1_quantity
-${locator.items[2].description}    id=tew_item_2_description
-${locator.items[2].classification.id}    id=tew_item_2_classification_id
-${locator.items[2].classification.description}    id=tw_item_2_classification_description
+${locator.items[2].description}    id = item-description-3
+${locator.items[2].classification.id}    id = item-classification_id3
+${locator.items[2].classification.description}    id = item-classification_description3
 ${locator.items[2].classification.scheme}    id=tw_item_2_classification_scheme
-${locator.items[2].unit.code}    id=tw_item_2_unit_code
-${locator.items[2].unit.name}    id=tslw_item_2_unit_code
+${locator.items[2].unit.code}    id = item-unit_code3
+${locator.items[2].unit.name}    id = item-unit_name-3
 ${locator.items[2].quantity}    id=tew_item_2_quantity
-${locator.questions[0].title}    css=.qa_title
-${locator.questions[0].description}    css=.qa_description
-${locator.questions[0].date}    css=.qa_question_date
-${locator.questions[0].answer}    css=.qa_answer
-${locator.cancellations[0].status}    css=.cancel_status
-${locator.cancellations[0].reason}    css=.cancel_reason
+${locator.questions[0].title}    id = question-title1
+${locator.questions[0].description}    id=question-description1
+${locator.questions[0].date}    id = question-date1
+${locator.questions[0].answer}    id = question-answer1
+${locator.cancellations[0].status}    id = status
+${locator.cancellations[0].reason}    id = messages-notes
 ${locator.contracts.status}    css=.contract_status
 
 *** Keywords ***
 Підготувати клієнт для користувача
     [Arguments]    @{ARGUMENTS}
-    [Documentation]    Відкрити брaвзер, створити обєкт api wrapper, тощо
     Open Browser    ${USERS.users['${ARGUMENTS[0]}'].homepage}    ${USERS.users['${ARGUMENTS[0]}'].browser}    alias=${ARGUMENTS[0]}
     Set Window Size    @{USERS.users['${ARGUMENTS[0]}'].size}
     Set Window Position    @{USERS.users['${ARGUMENTS[0]}'].position}
@@ -78,7 +75,6 @@ ${locator.contracts.status}    css=.contract_status
 
 Підготувати дані для оголошення тендера користувачем
     [Arguments]    ${username}    ${tender_data}    ${role_name}
-    [Documentation]    Відключити створення тендеру в тестовому режимі
     ${tender_data}=    adapt_test_mode    ${tender_data}
     [Return]    ${tender_data}
 
@@ -102,6 +98,7 @@ Login
     [Arguments]    @{ARGUMENTS}
     [Documentation]    ${ARGUMENTS[0]} == username
     ...    ${ARGUMENTS[1]} == tender_data
+    ...    ${ARGUMENTS[2]} == ${filepath}
     Set Global Variable    ${TENDER_INIT_DATA_LIST}    ${ARGUMENTS[1]}
     ${title}=    Get From Dictionary    ${ARGUMENTS[1].data}    title
     ${dgf}=    Get From Dictionary    ${ARGUMENTS[1].data}    dgfID
@@ -136,30 +133,45 @@ Login
     Input text    id=lots-start_price    ${budget}
     Click Element    id=lots-nds
     Input text    id=lots-auction_date    ${start_day_auction}
-    input text    id=lots-step    ${step_rate}
+    Input text    id=lots-step    ${step_rate}
+    Input text    id = lots-bidding_date    ${locator.auctionPeriod.startDate}
+    Input text    id = lots-bidding_date_end    ${locator.enquiryPeriod.endDate}
+    Input text    id = lots-auction_date    ${locator.tenderPeriod.startDate}
+    Input text    id = lots-auction_date_end    ${locator.tenderPeriod.endDate}
+    Input text    id = lots-address
+    Input text    id = lots-delivery_time
+    Input text    id = lots-delivery_term
+    Input text    id = lots-requires
+    Input text    id = lots-notes
+    Click Element    id=submit-auction-btn
+    Wait Until Page Contains    Аукціон збережено як чернетку    10
+    Select From List By Value    id = files-type    1
+    Choose File    id = auction-file    ${ARGUMENTS[2]}
+    Click Element    id = lot-document-upload-btn
     ${items}=    Get From Dictionary    ${ARGUMENTS[1].data}    items
     ${Items_length}=    Get Length    ${items}
     Додати предмет    ${items[${index}]}    ${index}
-    Click Element    id=submit-auction-btn
-    Sleep    3
-    Wait Until Page Contains Element    id = publish-btn    20
-    Click Element    id = publish-btn
-    Wait Until Page Contains    Аукціон створено    10
-    ${tender_id}=    Get Text    id=tPosition_tenderID
-    ${TENDER}=    Get Text    id=tPosition_tenderID
+    Click Element    id = submissive-btn
+    Wait Until Page Contains    Успішно оновлено    10
+    Click Element    id =publish-btn
+    Wait Until Page Contains    Аукціон створено
+    ${tender_id}=    Get Text    id = auction-id
+    ${TENDER}=    Get Text    id= auction-id
     log to console    ${TENDER}
     [Return]    ${TENDER}
 
 Додати предмет
     [Arguments]    ${item}    ${index}
-    Input text    id=items-0-description    ${item.description}
-    Input text    id=items-0-quantity    ${item.quantity}
-    Select From List By Value    id=items-0-unit_code    ${item.unit.code}
-    Select From List By Value    id=select2-items-0-classification_id-container    ${item.classification.id}
+    Click Element    id = create-item-btn
+    Input text    id=items-description    ${item.description}
+    Input text    id=items-quantity    ${item.quantity}
+    Select From List By Value    id=items-unit_code    ${item.unit.code}
+    Select From List By Value    id=select2-items-classification_id-container    ${item.classification.id}
     Input text    id=items-address_postalcode    ${item.deliveryAddress.postalCode}
     Input text    id=items-address_region    ${item.deliveryAddress.region}
     Input text    id=items-address_locality    ${item.deliveryAddress.locality}
     Input text    id=items-address_streetaddress    ${item.deliveryAddress.streetAddress}
+    Click Element    id = submit-item-btn
 
 Завантажити документ
     [Arguments]    @{ARGUMENTS}
@@ -169,10 +181,10 @@ Login
     uisce.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[2]}
     Wait Until Page Contains Element    id = update-btn
     Click Element    id=update-btn
-    Select From List By Value    id = files-type    Договір про нерозголошення
-    Choose File    css = div.file-caption-name    ${ARGUMENTS[1]}
+    Select From List By Value    id = files-type    8
+    Choose File    id = auction-file    ${ARGUMENTS[1]}
     Sleep    2
-    Click Element    id=upload_button
+    Click Element    id=lot-document-upload-btn
     Reload Page
 
 Пошук тендера по ідентифікатору
@@ -181,23 +193,26 @@ Login
     ...    ${ARGUMENTS[1]} == ${TENDER}
     Switch Browser    ${ARGUMENTS[0]}
     Go to    ${USERS.users['${ARGUMENTS[0]}'].default_page}
-    Wait Until Page Contains Element    name = Auctions[tenderID]
-    Input Text    name = Auctions[tenderID]    ${ARGUMENTS[1]}
+    Wait Until Page Contains Element    name = Auctions[auctionID]
+    Input Text    name = Auctions[auctionID]    ${ARGUMENTS[1]}
+    Click Element    name = Auctions[title]
     Sleep    2
-    Wait Until Page Contains Element    id=
-    Click Element    id=
-    sleep    2
+    Wait Until Page Contains Element    id=auction-view-btn
+    Click Element    id=auction-view-btn
 
 Перейти до сторінки запитань
-    Click Element    id =
-    Wait Until Page Contains Element    id=
-    Click Element    id=
-    Wait Until Page Contains Element    id=questions-title
+    [Documentation]    ${ARGUMENTS[0]} = username
+    ...    ${ARGUMENTS[1]} = tenderUaId
+    uisce.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
+    Click Element    id = auction-view-btn
+    Click Element    id = tab-2
+    Wait Until Page Contains Element    id= create-question-btn
 
 Перейти до сторінки відмін
-    Wait Until Page Contains Element    id=cancels_ref
-    Click Element    id=cancels_ref
-    Wait Until Element Contains    id=records_shown    Y
+    Go To    https://proumstrade.com.ua/cancelations/index
+    Wait Until Page Contains Element    id=decline-btn
+    Click Element    id=decline-btn
+    Wait Until Page Contains Element    id=decline-id
 
 Задати питання
     [Arguments]    @{ARGUMENTS}
@@ -206,48 +221,27 @@ Login
     ...    ${ARGUMENTS[2]} == questionId
     ${title}=    Get From Dictionary    ${ARGUMENTS[2].data}    title
     ${description}=    Get From Dictionary    ${ARGUMENTS[2].data}    description
-    Wait Until Page Contains Element    id=
-    Click Element    id=
+    Wait Until Page Contains Element    id = auction-view-btn
+    Click Element    id = auction-view-btn
+    Click Element    id = tab-2
+    Wait Until Page Contains Element    id= create-question-btn
+    Click Element    id=create-question-btn
     Sleep    3
     Input text    id=questions-title    ${title}
     Input text    id=questions-description    ${description}
-    Click Element    id=
-    Sleep    3
-
-Скасувати закупівлю
-    [Arguments]    @{ARGUMENTS}
-    [Documentation]    ${ARGUMENTS[0]} = username
-    ...    ${ARGUMENTS[1]} = tenderUaId
-    ...    ${ARGUMENTS[2]} = cancellation_reason
-    ...    ${ARGUMENTS[3]} = doc_path
-    ...    ${ARGUMENTS[4]} = description
-    uisce.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
-    Wait Until Page Contains Element    xpath=(//*[@id='btnСancel' and not(contains(@style,'display: none'))])
-    Click Element    id=btnСancel
-    Sleep    2
-    Input text    id=e_reason    ${ARGUMENTS[2]}
-    Click Element    id=SendCancellation
-    Sleep    3
-    Wait Until Page Contains Element    xpath=(//*[@id='pnList']//span[contains(@class, 'add_document')])
-    Click Element    xpath=(//*[@id='pnList']//span[contains(@class, 'add_document')])
-    Choose File    xpath=(//*[@id='upload_form']/input[2])    ${ARGUMENTS[3]}
-    Sleep    2
-    Input text    id=eFile_accessDetails    ${ARGUMENTS[4]}
-    Click Element    id=upload_button
-    Sleep    2
-    Reload Page
-    Click Element    xpath=(//*[@id='pnList']/div[1]/div[2]/div[2]/span)
+    Click Element    id= create-question-btn
 
 Отримати інформацію про cancellations[0].status
     Перейти до сторінки відмін
-    Wait Until Page Contains Element    xpath=(//span[contains(@class, 'rec_cancel_status')])
-    ${return_value}=    Get text    xpath=(//span[contains(@class, 'rec_cancel_status')])
+    Wait Until Page Contains Element    id = status
+    ${return_value}=    Get text    id = status
     [Return]    ${return_value}
 
 Отримати інформацію про cancellations[0].reason
     Перейти до сторінки відмін
-    Wait Until Page Contains Element    xpath=(//span[contains(@class, 'rec_cancel_reason')])
-    ${return_value}=    Get text    xpath=(//span[contains(@class, 'rec_cancel_reason')])
+    Wait Until Page Contains Element    id = modal-btn
+    Click Element    id = modal-btn
+    ${return_value}=    Get text    id = messages-notes
     [Return]    ${return_value}
 
 Оновити сторінку з тендером
@@ -270,7 +264,7 @@ Login
     [Arguments]    @{ARGUMENTS}
     [Documentation]    ${ARGUMENTS[0]} == username
     ...    ${ARGUMENTS[2]} == fieldname
-    ${return_value}=    run keyword    Отримати інформацію про ${ARGUMENTS[2]}
+    ${return_value}=    Run Keyword    Отримати інформацію про ${ARGUMENTS[2]}
     [Return]    ${return_value}
 
 Отримати текст із поля і показати на сторінці
@@ -309,9 +303,9 @@ Login
 
 Отримати інформацію про status
     Reload Page
-    Wait Until Page Contains Element    xpath=(//*[@id='tPosition_status' and not(contains(@style,'display: none'))])
+    Wait Until Page Contains Element    id = status
     Sleep    2
-    ${return_value}=    Get Text    id=tPosition_status
+    ${return_value}=    Get Text    id = status
     [Return]    ${return_value}
 
 Отримати інформацію про description
@@ -334,10 +328,10 @@ Login
     ...    ${ARGUMENTS[1]} = ${TENDER_UAID}
     ...    ${ARGUMENTS[2]} == fieldname
     ...    ${ARGUMENTS[3]} == fieldvalue
-    Wait Until Page Contains Element    id =     5
-    Click Element    id =
+    ums.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
+    Click Element    id = update-btn
     Input Text    ${locator.edit.${ARGUMENTS[2]}}    ${ARGUMENTS[3]}
-    Click Element    id=submit-auction-btn
+    Click Element    id=submissive-btn
     Wait Until Page Contains    Успішно оновлено    5
     ${result_field}=    Get Value    ${locator.edit.${ARGUMENTS[2]}}
     Should Be Equal    ${result_field}    ${ARGUMENTS[3]}
@@ -453,8 +447,8 @@ Login
 
 Отримати інформацію про questions[${index}].title
     ${index}=    inc    ${index}
-    Wait Until Page Contains Element    xpath=(//span[contains(@class, 'rec_qa_title')])[${index}]
-    ${return_value}=    Get text    xpath=(//span[contains(@class, 'rec_qa_title')])[${index}]
+    Wait Until Page Contains Element    id =
+    ${return_value}=    Get text    id =
     [Return]    ${return_value}
 
 Отримати інформацію про questions[${index}].description
@@ -484,118 +478,81 @@ Login
     ...    ${ARGUMENTS[3]} = answer_data
     ${answer}=    Get From Dictionary    ${ARGUMENTS[3].data}    answer
     Перейти до сторінки запитань
-    Wait Until Page Contains Element    xpath=(//*[contains(@class, 'bt_addAnswer') and not(contains(@style,'display: none'))])
-    Click Element    css=.bt_addAnswer:first-child
-    Input Text    id=e_answer    ${answer}
-    Click Element    id=SendAnswer
-    sleep    1
+    Click Element    id = create-answer-btn
+    Sleep    3
+    Input Text    id=questions-answer    ${answer}
+    Click Element    id=create-question-btn
 
 Подати цінову пропозицію
     [Arguments]    @{ARGUMENTS}
     [Documentation]    ${ARGUMENTS[0]} == username
     ...    ${ARGUMENTS[1]} == tenderId
     ...    ${ARGUMENTS[2]} == ${test_bid_data}
+    ...    ${ARGUMENTS[3]} == ${filepath}
     ${amount}=    get_str    ${ARGUMENTS[2].data.value.amount}
-    ${is_qualified}=    is_qualified    ${ARGUMENTS[2]}
-    ${is_eligible}=    is_eligible    ${ARGUMENTS[2]}
     uisce.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
-    Wait Until Page Contains Element    xpath=(//*[@id='btnBid' and not(contains(@style,'display: none'))])
-    Click Element    id=btnBid
-    Sleep    3
-    Wait Until Page Contains Element    xpath=(//*[@id='eBid_price' and not(contains(@style,'display: none'))])
-    Input Text    id=eBid_price    ${amount}
-    Run Keyword If    ${is_qualified}    Click Element    id=lcbBid_selfQualified
-    Run Keyword If    ${is_eligible}    Click Element    id=lcbBid_selfEligible
-    Click Element    id=btn_save
+    Wait Until Page Contains Element    id = view-btn
+    Click Element    id= view-btn
+    sleep    3s
+    Click Element    id = create-bid-btn
+    sleep    5s
+    Input Text    id=bids-value_amount    ${amount}
+    Choose File    id = upload-file-input
+    Click Element    id= create-bid-btn
     sleep    3
-    Wait Until Page Contains Element    xpath=(//*[@id='btn_public' and not(contains(@style,'display: none'))])
-    Click Element    id=btn_public
-    sleep    1
-    ${resp}=    Get Value    id=eBid_price
+    ${resp}=    Get Value    id=bids-value_amount
     [Return]    ${resp}
 
 Скасувати цінову пропозицію
     [Arguments]    @{ARGUMENTS}
     [Documentation]    ${ARGUMENTS[0]} == username
     ...    ${ARGUMENTS[1]} == tenderId
-    uisce.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
-    Wait Until Page Contains Element    xpath=(//*[@id='btnShowBid' and not(contains(@style,'display: none'))])
-    Click Element    id=btnShowBid
+    Go To    http://proumstrade.com.ua/bids/index
+    Wait Until Page Contains Element    id = view-bids-btn
+    Click Element    id = view-bids-btn
     Sleep    3
-    Wait Until Page Contains Element    xpath=(//*[@id='btn_delete' and not(contains(@style,'display: none'))])
-    Click Element    id=btn_delete
+    Wait Until Page Contains Element    id = modal-btn
+    Click Element    id=modal-btn
+    Wait Until Page Contains Element    id = messages-notes
+    Input Text    id = messages-notes    Some reason
+    Click Element    id = decline-modal-id
 
 Отримати інформацію із пропозиції
     [Arguments]    ${username}    ${tender_uaid}    ${field}
-    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    Wait Until Page Contains Element    xpath=(//*[@id='btnShowBid' and not(contains(@style,'display: none'))])
-    Click Element    id=btnShowBid
-    Sleep    3
-    ${value}=    Get Value    id=eBid_price
+    Go To    http://proumstrade.com.ua/bids/index    ${tender_uaid}
+    Wait Until Page Contains Element    id = view-btn
+    Click Element    id = view-btn
+    Wait Until Page Contains Element    id=bids-value-amount
+    ${value}=    Get Value    id=bids-value_amount
     ${value}=    Convert To Number    ${value}
     [Return]    ${value}
 
 Змінити цінову пропозицію
     [Arguments]    @{ARGUMENTS}
-    [Documentation]    ${ARGUMENTS[0]} == username
-    ...    ${ARGUMENTS[1]} == tenderId
-    ...    ${ARGUMENTS[2]} == amount
-    ...    ${ARGUMENTS[3]} == amount.value
-    ${amount}=    get_str    ${${ARGUMENTS[3]}}
-    uisce.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
-    Wait Until Page Contains Element    xpath=(//*[@id='btnShowBid' and not(contains(@style,'display: none'))])
-    Click Element    id=btnShowBid
-    Sleep    3
-    Wait Until Page Contains Element    xpath=(//*[@id='eBid_price' and not(contains(@style,'display: none'))])
-    Input Text    id=eBid_price    ${amount}
-    sleep    1
-    Click Element    id=btn_public
-
-Завантажити документ в ставку
-    [Arguments]    @{ARGUMENTS}
-    [Documentation]    ${ARGUMENTS[1]} == file
-    ...    ${ARGUMENTS[2]} == tenderId
-    Wait Until Page Contains Element    xpath=(//*[@id='btnShowBid' and not(contains(@style,'display: none'))])
-    Click Element    id=btnShowBid
-    Sleep    3
-    Wait Until Page Contains Element    xpath=(//*[@id='btn_documents_add' and not(contains(@style,'display: none'))])
-    Click Element    id=btn_documents_add
-    Choose File    xpath=(//*[@id='upload_form']/input[2])    ${ARGUMENTS[1]}
-    Sleep    2
-    Click Element    id=upload_button
-    Reload Page
-
-Змінити документ в ставці
-    [Arguments]    @{ARGUMENTS}
-    [Documentation]    ${ARGUMENTS[0]} == username
-    ...    ${ARGUMENTS[1]} == file
-    ...    ${ARGUMENTS[2]} == bidId
-    Reload Page
-    Wait Until Page Contains Element    xpath=(//*[@id='btn_documents_add' and not(contains(@style,'display: none'))])
-    Click Element    css=.bt_ReUpload:first-child
-    Choose File    xpath=(//*[@id='upload_form']/input[2])    ${ARGUMENTS[1]}
-    Sleep    2
-    Click Element    id=upload_button
-    Reload Page
+    [Documentation]    ${ARGUMENTS[0]} == ${test_bid_data}
+    ${amount}=    get_str    ${ARGUMENTS[0].data.value.amount}
+    Go To    https://proumstrade.com.ua/bids/index
+    Wait Until Page Contains Element    id= update-bids-btn
+    Click Element    id= update-bids-btn
+    sleep    3s
+    Input Text    id=bids-value_amount    ${amount}
+    Click Element    id= update-bid-btn
 
 Завантажити фінансову ліцензію
-    [Arguments]    ${username}    ${tender_uaid}    ${filepath}
-    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    Wait Until Page Contains Element    xpath=(//*[@id='btnShowBid' and not(contains(@style,'display: none'))])
-    Click Element    id=btnShowBid
-    Sleep    3
-    Wait Until Page Contains Element    xpath=(//*[@id='btn_documents_add' and not(contains(@style,'display: none'))])
-    Click Element    id=btn_documents_add
-    Select From List By Value    id=slFile_documentType    financialLicense
-    Choose File    xpath=(//*[@id='upload_form']/input[2])    ${filepath}
-    Sleep    2
-    Click Element    id=upload_button
-    Reload Page
-
-Отримати інформацію про bids
     [Arguments]    @{ARGUMENTS}
-    Викликати для учасника    ${ARGUMENTS[0]}    Оновити сторінку з тендером    ${ARGUMENTS[1]}
-    Click Element    id=bids_ref
+    [Documentation]    ${ARGUMENTS[0]} == username
+    ...    ${ARGUMENTS[1]} == tenderId
+    ...    ${ARGUMENTS[2]} == ${test_bid_data}
+    ...    ${ARGUMENTS[3]} == ${filepath}
+    ${amount}=    get_str    ${ARGUMENTS[2].data.value.amount}
+    uisce.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
+    Wait Until Page Contains Element    id = update-btn
+    Click Element    id= update-btn
+    sleep    3s
+    Click Element    id = create-bid-btn
+    sleep    5s
+    Choose File    css = div.file-caption-name    ${ARGUMENTS[3]}
+    Click Element    id = create-bid-btn
 
 Отримати посилання на аукціон для глядача
     [Arguments]    @{ARGUMENTS}
@@ -616,78 +573,79 @@ Login
 Завантажити документ в тендер з типом
     [Arguments]    ${username}    ${tender_uaid}    ${filepath}    ${doc_type}
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    Wait Until Page Contains Element    xpath=(//*[@id='btn_documents_add' and not(contains(@style,'display: none'))])
-    Click Element    id=btn_documents_add
-    Select From List By Value    id=slFile_documentType    ${doc_type}
-    Choose File    xpath=(//*[@id='upload_form']/input[2])    ${filepath}
+    Wait Until Page Contains Element    id = update-btn
+    Click Element    id=update-btn
+    Select From List By Value    id = files-type    ${doc_type}
+    Choose File    css = div.file-caption-name    ${filepath}
     Sleep    2
     Click Element    id=upload_button
 
 Завантажити ілюстрацію
-    [Arguments]    ${username}    ${tender_uaid}    ${filepath}
-    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    Wait Until Page Contains Element    xpath=(//*[@id='btn_documents_add' and not(contains(@style,'display: none'))])
-    Click Element    id=btn_documents_add
-    Select From List By Value    id=slFile_documentType    6
-    Choose File    xpath=(//*[@id='upload_form']/input[2])    ${filepath}
+    [Arguments]    @{ARGUMENTS}
+    [Documentation]    ${ARGUMENTS[0]} == username
+    ...    ${ARGUMENTS[1]} == \ ${filepath}
+    ...    ${ARGUMENTS[2]} == ${tender_uaid}
+    uisce.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[2]}
+    Wait Until Page Contains Element    id = update-btn
+    Click Element    id=update-btn
+    Select From List By Value    id = files-type    6
+    Choose File    id = auction-file    ${ARGUMENTS[1]}
     Sleep    2
     Click Element    id=upload_button
+    Reload Page
 
 Додати Virtual Data Room
-    [Arguments]    ${username}    ${tender_uaid}    ${vdr_url}
-    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    Wait Until Page Contains Element    xpath=(//*[@id='btn_documents_add' and not(contains(@style,'display: none'))])
-    Click Element    id=btn_documents_add
-    Select From List By Value    id=slFile_documentType    virtualDataRoom
-    Input text    id=eFile_url    ${vdr_url}
+    [Arguments]    @{ARGUMENTS}
+    [Documentation]    ${ARGUMENTS[0]} == username
+    ...    ${ARGUMENTS[1]} == tenderId
+    ...    ${ARGUMENTS[2]} == ${vdr_url}
+    uisce.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[2]}
+    Wait Until Page Contains Element    id = update-btn
+    Click Element    id=update-btn
+    Select From List By Value    id = files-type    10
+    Choose File    id = auction-file    ${ARGUMENTS[1]}
+    Sleep    2
     Click Element    id=upload_button
+    Reload Page
 
 Додати публічний паспорт активу
-    [Arguments]    ${username}    ${tender_uaid}    ${vdr_url}
-    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    Wait Until Page Contains Element    xpath=(//*[@id='btn_documents_add' and not(contains(@style,'display: none'))])
-    Click Element    id=btn_documents_add
-    Select From List By Value    id=slFile_documentType    x_dgfPublicAssetCertificate
-    Input text    id=eFile_url    ${vdr_url}
+    [Arguments]    @{ARGUMENTS}
+    [Documentation]    ${ARGUMENTS[0]} == username
+    ...    ${ARGUMENTS[1]} == tenderId
+    ...    ${ARGUMENTS[2]} == ${vdr_url}
+    uisce.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[2]}
+    Wait Until Page Contains Element    id = update-btn
+    Click Element    id=update-btn
+    Select From List By Value    id = files-type    2
+    Choose File    id = auction-file    ${ARGUMENTS[1]}
+    Sleep    2
     Click Element    id=upload_button
-
-Додати офлайн документ
-    [Arguments]    ${username}    ${tender_uaid}    ${accessDetails}
-    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    Wait Until Page Contains Element    xpath=(//*[@id='btn_documents_add' and not(contains(@style,'display: none'))])
-    Click Element    id=btn_documents_add
-    Select From List By Value    id=slFile_documentType    x_dgfAssetFamiliarization
-    Input text    id=eFile_accessDetails    ${accessDetails}
-    Click Element    id=upload_button
+    Reload Page
 
 Отримати інформацію із документа по індексу
     [Arguments]    ${username}    ${tender_uaid}    ${document_index}    ${field}
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    ${doc_value}=    Get Text    xpath=(//*[@id='pn_documentsContent_']/table[${document_index + 1}]//span[contains(@class, 'documentType')])
+    ${doc_value}=    Get Text    id = doc_id
     [Return]    ${doc_value}
 
 Отримати інформацію із документа
     [Arguments]    ${username}    ${tender_uaid}    ${doc_id}    ${field_name}
-    ${doc_value}=    Run Keyword If    '${field_name}' == 'description'    Get Text    xpath=(//span[contains(@class, 'description') and contains(@class, '${doc_id}')])
-    ...    ELSE    Get Text    xpath=(//a[contains(@class, 'doc_title') and contains(@class, '${doc_id}')])
+    ${doc_value}=    Get Text    id = doc_id
     [Return]    ${doc_value}
 
 Відповісти на запитання
-    [Arguments]    ${username}    ${tender_uaid}    ${answer_data}    ${item_id}
-    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    [Arguments]    @{ARGUMENTS}
+    [Documentation]    ${ARGUMENTS[0]} = username
+    ...    ${ARGUMENTS[1]} = ${TENDER_UAID}
+    ...    ${ARGUMENTS[2]} = 0
+    ...    ${ARGUMENTS[3]} = answer_data
+    ${answer}=    Get From Dictionary    ${ARGUMENTS[3].data}    answer
     Перейти до сторінки запитань
-    Wait Until Page Contains Element    xpath=(//span[contains(@class, 'btAnswer') and contains(@class, '${item_id}')])
-    Click Element    xpath=(//span[contains(@class, 'btAnswer') and contains(@class, '${item_id}')])
-    Input Text    id=e_answer    ${answer_data.data.answer}
-    Click Element    id=SendAnswer
+    Click Element    id = create-answer-btn
+    Sleep    3
+    Input Text    id=questions-answer    ${answer}
+    Click Element    id=create-question-btn
     sleep    1
-
-Отримати кількість предметів в тендері
-    [Arguments]    ${username}    ${tender_uaid}
-    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    ${return_value}=    Get Text    id=tPosition_items_count
-    ${return_value}=    Convert To Number    ${return_value}
-    [Return]    ${return_value}
 
 Отримати інформацію із запитання
     [Arguments]    ${username}    ${tender_uaid}    ${question_id}    ${field_name}
@@ -703,48 +661,19 @@ Login
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
     Задати питання    ${username}    ${tender_uaid}    ${question}
 
-Задати запитання на предмет
-    [Arguments]    ${username}    ${tender_uaid}    ${item_id}    ${question}
-    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    Wait Until Page Contains Element    xpath=(//*[@id='tPosition_status' and not(contains(@style,'display: none'))])
-    Click Element    xpath=(//span[contains(@class, 'bt_item_question') and contains(@class, '${item_id}')])
-    Sleep    3
-    Input text    id=e_title    ${question.data.title}
-    Input text    id=e_description    ${question.data.description}
-    Click Element    id=SendQuestion
-    Sleep    3
-
-Додати предмет закупівлі
-    [Arguments]    ${username}    ${tender_uaid}    ${item}
-    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    ${index}=    uisce.Отримати кількість предметів в тендері    ${username}    ${tender_uaid}
-    ${ItemAddButtonVisible}=    Page Should Contain Element    id=btn_items_add
-    Run Keyword If    '${ItemAddButtonVisible}'=='PASS'    Run Keywords    Додати предмет    ${item}    ${index}
-    ...    AND    Click Element    id=btnPublic
-    ...    AND    Wait Until Page Contains    Публікацію виконано    10
-
-Видалити предмет закупівлі
-    [Arguments]    ${username}    ${tender_uaid}    ${item_id}
-    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    ${ItemAddButtonVisible}=    Page Should Contain Element    id=btn_items_add
-    Run Keyword If    '${ItemAddButtonVisible}'=='PASS'    Run Keywords    Wait Until Page Contains Element    xpath=(//ul[contains(@class, 'bt_item_delete') and contains(@class, ${item_id})])
-    ...    AND    Click Element    xpath=(//ul[contains(@class, 'bt_item_delete') and contains(@class, ${item_id})])
-    ...    AND    Click Element    id=btnPublic
-    ...    AND    Wait Until Page Contains    Публікацію виконано    10
-
 Отримати кількість документів в тендері
     [Arguments]    ${username}    ${tender_uaid}
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    ${tender_doc_number}=    Get Matching Xpath Count    xpath=(//*[@id='pn_documentsContent_']/table)
+    ${tender_doc_number}=    Get Matching Xpath Count    xpath=(//*[@id=' doc_id']/)
     [Return]    ${tender_doc_number}
 
 Отримати документ
     [Arguments]    ${username}    ${tender_uaid}    ${doc_id}
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    Click Element    xpath=(//a[contains(@class, 'doc_title') and contains(@class, '${doc_id}')])
+    Click Element    id = update-btn
     sleep    3
-    ${file_name}=    Get Text    xpath=(//a[contains(@class, 'doc_title') and contains(@class, '${doc_id}')])
-    ${url}=    Get Element Attribute    xpath=(//a[contains(@class, 'doc_title') and contains(@class, '${doc_id}')])@href
+    ${file_name}=    Get Text    id = doc-id
+    ${url}=    Get Element Attribute    id = doc-id@name
     download_file    ${url}    ${file_name.split('/')[-1]}    ${OUTPUT_DIR}
     [Return]    ${file_name.split('/')[-1]}
 
@@ -754,30 +683,12 @@ Login
     ${result}=    Get Text    xpath=(//*[@id='pnAwardList']/div[last()]/div/div[1]/div/div/div[2]/table[${document_index}]//span[contains(@class, 'documentType')])
     [Return]    ${result}
 
-Отримати кількість документів в ставці
-    [Arguments]    ${username}    ${tender_uaid}    ${bid_index}
-    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    ${bid_doc_number}=    Get Matching Xpath Count    xpath=(//*[@id='pnAwardList']/div[last()]/div/div[1]/div/div/div[2]/table)
-    [Return]    ${bid_doc_number}
-
 Скасування рішення кваліфікаційної комісії
     [Arguments]    ${username}    ${tender_uaid}    ${award_num}
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
     Wait Until Page Contains Element    xpath=(//*[@id='pnAwardList']/div[last()]//*[contains(@class, 'Cancel_button')])
     Sleep    1
     Click Element    xpath=(//*[@id='pnAwardList']/div[last()]//*[contains(@class, 'Cancel_button')])
-
-Підтвердити постачальника
-    [Arguments]    ${username}    ${tender_uaid}    ${award_num}
-    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    Wait Until Page Contains Element    xpath=(//*[@id='pnAwardList']/div[last()]//*[contains(@class, 'award_button')])
-    Sleep    1
-    Click Element    xpath=(//*[@id='pnAwardList']/div[last()]//*[contains(@class, 'award_button')])
-
-Дискваліфікувати постачальника
-    [Arguments]    ${username}    ${tender_uaid}    ${award_num}    ${description}
-    Input text    xpath=(//*[@id='pnAwardList']/div[last()]//*[contains(@class, 'Reject_description')])    ${description}
-    Click Element    xpath=(//*[@id='pnAwardList']/div[last()]//*[contains(@class, 'Reject_button')])
 
 Завантажити документ рішення кваліфікаційної комісії
     [Arguments]    ${username}    ${filepath}    ${tender_uaid}    ${award_num}
