@@ -57,32 +57,9 @@ def convert_date_time_to_iso(v_date_time):
    localized_date = time_zone.localize(date_obj)
    return localized_date.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
-def get_scheme(f_value):
-   return f_value.split(' ')[1]
-
-def procuringEntity_name(initial_tender_data):
-   initial_tender_data.data.procuringEntity['name'] = u"Test_company_from_Prozorro"
-   return initial_tender_data
-
-def adapt_procuringEntity(tender_data):
-   tender_data['data']['procuringEntity']['name'] = u'Test_company_from_Prozorro"'
-   return tender_data
-
-def is_qualified(tender_data):
-   if 'qualified' in tender_data['data']:
-       return  tender_data['data']['qualified']
-   return False
-
-def is_eligible(tender_data):
-   if 'eligible' in tender_data['data']:
-       return  tender_data['data']['eligible']
-   return False
-
 def download_file(url, file_name, output_dir):
    urllib.urlretrieve(url, ('{}/{}'.format(output_dir, file_name)))
 
 def inc(value):
    return int(value) + 1
 
-def to_string(value):
-    return str(value)

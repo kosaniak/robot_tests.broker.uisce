@@ -84,8 +84,8 @@ ${locator.contracts.status}    css=.contract_status
 ${locator.procuringEntity.contactPoint.name}    id = lots-ownername
 ${bid.data.participationUrl}    id = auction-url
 ${tender.data.auctionUrl}    id = to-bid-url 
-${locator.awards[0].status}    id = auction[0].status
-${locator.awards[1].status}    id = auction[1].status
+${locator.awards[0].status}    id = winner-award-status
+${locator.awards[1].status}    id = second-award-status
 
 
 *** Keywords ***
@@ -98,11 +98,6 @@ ${locator.awards[1].status}    id = auction[1].status
 
 Підготувати дані для оголошення тендера
     [Arguments]    ${username}    ${tender_data}    ${role_name}
-    [Return]    ${tender_data}
-
-Підготувати дані для оголошення тендера користувачем
-    [Arguments]    ${username}    ${tender_data}    ${role_name}
-    ${tender_data}=    adapt_test_mode    ${tender_data}
     [Return]    ${tender_data}
 
 Login
@@ -198,7 +193,6 @@ Login
     Input text    id=items-address_locality    ${item.deliveryAddress.locality}
     Input text    id=items-address_streetaddress    ${item.deliveryAddress.streetAddress}
     Click Element    id = btn-item-add
-
 
 Додати предмет закупівлі
     [Arguments]  ${username}  ${tender_uaid}  ${item}
@@ -383,7 +377,7 @@ Login
 
 Отримати інформацію про minimalStep.amount
     ${return_value}=    Отримати текст із поля і показати на сторінці    minimalStep.amount
-    ${return_value}=    convert to number    ${return_value.replace(' ', '').replace(',', '.')}
+    ${return_value}=    Convert To Number    ${return_value.replace(' ', '').replace(',', '.')}
     [Return]    ${return_value}
 
 Внести зміни в тендер
@@ -508,12 +502,12 @@ Login
     ${return_value}=    uisce_service.convert_date    ${date_value}
     [Return]    ${return_value}
 
-Отримати інформацію про awards[0].status
-    ${return_value}=     Отримати текст із поля і показати на сторінці    awards[0].status
+Отримати інформацію про auction[0].status
+    ${return_value}=     Отримати текст із поля і показати на сторінці    auction[0].status
     [Return]    ${return_value}
 
-Отримати інформацію про awards[1].status
-    ${return_value}=     Отримати текст із поля і показати на сторінці    awards[1].status
+Отримати інформацію про auction[1].status
+    ${return_value}=     Отримати текст із поля і показати на сторінці    auction[1].status
     [Return]    ${return_value}
 
 Перейти до сторінки запитань
@@ -539,11 +533,6 @@ Login
     Input text    id=question-description    ${description}
     Click Element    id= create-question-btn
     ${description}=    Get From Dictionary    ${ARGUMENTS[2].data}    description
-
-Задати запитання на тендер
-    [Arguments]    ${username}    ${tender_uaid}    ${question}
-    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    uisce.Задати питання    ${username}    ${tender_uaid}    ${question}
 
 Задати запитання на предмет
   [Arguments]  ${username}  ${tender_uaid}  ${item_id}  ${question}
@@ -599,8 +588,6 @@ Login
     Click Element    id=create-question-btn
     Click Element    id = tab-selector-2
 
-
-
 Отримати інформацію із запитання
     [Arguments]    ${username}    ${tender_uaid}    ${question_id}    ${field_name}
     uisce.Перейти до сторінки запитань    ${username}    ${tender_uaid}
@@ -609,7 +596,6 @@ Login
     ...    ELSE IF    '${field_name}' == 'answer'    Отримати інформацію про questions[${index}].answer
     ...    ELSE    Отримати інформацію про questions[${index}].description
     [Return]    ${return_value}
-
 
 Подати цінову пропозицію
     [Arguments]    @{ARGUMENTS}
@@ -708,7 +694,6 @@ Login
     Click Element     id=document-upload-btn
     Reload Page
 
-
 Отримати посилання на аукціон для глядача
     [Arguments]    @{ARGUMENTS}
     Switch Browser    ${ARGUMENTS[0]}
@@ -725,7 +710,6 @@ Login
     ${tender.data.auctionUrl}=    Get Text    id=to-bid-url
     ${tender.data.participationUrl}=    Get Text    id=to-bid-url
     [Return]    ${tender.data.auctionUrl}
-
 
 Отримати інформацію із документа по індексу
     [Arguments]    ${username}    ${tender_uaid}    ${document_index}    ${field}
@@ -778,7 +762,7 @@ Login
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
     Wait Until Page Contains Element    id = winner-bid-link
     Click Element    id = winner-bid-link
-    Cliek Element    id = disqualify-link
+    Click Element    id = disqualify-link
     Choose File    id = files-file    ${filepath}
     Sleep    1
     Click Element    id=upload-disqualification-btn
