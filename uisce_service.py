@@ -71,3 +71,6 @@ def to_int(value):
 
 def to_str(value):
    return str(value)
+
+def get_upload_file_path():
+   return os.path.join(os.getcwd(), 'src', 'robot_tests.broker.uisce', 'test.txt')
