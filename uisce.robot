@@ -11,6 +11,10 @@ ${locator.edit.dgfID}    id = lots-num
 ${locator.edit.dgfDecisionDate}    id = lots-dgfdecisiondate
 ${locator.edit.dgfDecisionID}    id = lots-dgfdecisionid
 ${locator.edit.tenderAttempts}    id = lots-tenderattempts
+${locator.edit.title_ru}    id = lots-name
+${locator.edit.title_en}    id = lots-name
+${locator.title_ru}    id = auction-title
+${locator.title_en}    id = auction-title
 ${locator.title}    id = auction-title
 ${locator.description}    id = auction-description
 ${locator.minimalStep.amount}    id = auction-minimalStep_amount
@@ -32,31 +36,31 @@ ${locator.tenderAttempts}    id=auction-tenderAttempts
 ${locator.procurementMethodType}    id=auction-procurementMethodType
 ${locator.items[0].quantity}    id=items[0].quantity
 ${locator.items[0].description}    id = items[0].description
-${locator.items[0].unit.code}    id = items[0].unitcode
-${locator.items[0].unit.name}    id = items[0].unit.name
+${locator.items[0].unit.code}    id = items[0].unit_code
+${locator.items[0].unit.name}    id = items[0].unit_name
 ${locator.items[0].deliveryAddress.postalCode}    id=items[0].postalCode
 ${locator.items[0].deliveryAddress.region}    id=items[0].region
 ${locator.items[0].deliveryAddress.locality}    id=items[0].locality
 ${locator.items[0].deliveryAddress.streetAddress}    id=items[0].streetAddress
 ${locator.items[0].classification.scheme}    id=items[0].classification.scheme
 ${locator.items[0].classification.id}    id = items[0].classification.id
-${locator.items[0].classification.description}    id = items[0].classification.description
+${locator.items[0].classification.description}    id = items[0].classification_description
 ${locator.items[0].additionalClassifications[0].scheme}    id=items[0].additionalClassifications.description
 ${locator.items[0].additionalClassifications[0].id}    id=items[0].additionalClassifications.id
 ${locator.items[0].additionalClassifications[0].description}    id=items[0].additionalClassifications.description
 ${locator.items[1].description}    id = items[1].description
 ${locator.items[1].classification.id}    id = items[1].classification.id
-${locator.items[1].classification.description}    id = items[1].classification.description
+${locator.items[1].classification.description}    id = items[1].classification_description
 ${locator.items[1].classification.scheme}    id=items[1].classification.scheme
-${locator.items[1].unit.code}    id = items[1].unit.code
-${locator.items[1].unit.name}    id=items[1].unit.name
+${locator.items[1].unit.code}    id = items[1].unit_code
+${locator.items[1].unit.name}    id=items[1].unit_name
 ${locator.items[1].quantity}    id=items[1].quantity
 ${locator.items[2].description}    id = items[2].description
 ${locator.items[2].classification.id}    id = items[2].classification.id
-${locator.items[2].classification.description}    id = items[2].classification.description
+${locator.items[2].classification.description}    id = items[2].classification_description
 ${locator.items[2].classification.scheme}    id=items[2].classification.scheme
-${locator.items[2].unit.code}    id = items[2].unit.code
-${locator.items[2].unit.name}    id = items[2].unit.name
+${locator.items[2].unit.code}    id = items[2].unit_code
+${locator.items[2].unit.name}    id = items[2].unit_name
 ${locator.items[2].quantity}    id=items[2].quantity
 ${locator.questions[0].title}    id = question[1].title
 ${locator.questions[0].description}    id=question[1].description
@@ -82,10 +86,8 @@ ${locator.cancellations[1].status}    id = status
 ${locator.cancellations[1].reason}    id = messages-notes
 ${locator.contracts.status}    css=.contract_status
 ${locator.procuringEntity.contactPoint.name}    id = lots-ownername
-${bid.data.participationUrl}    id = auction-url
-${tender.data.auctionUrl}    id = to-bid-url 
-${locator.awards[0].status}    id = winner-award-status
-${locator.awards[1].status}    id = second-award-status
+${locator.awards[0].status}    id = winner-status
+${locator.awards[1].status}    id = status
 
 
 *** Keywords ***
@@ -262,7 +264,6 @@ Login
   Input Text  id = lots-address    ${accessDetails}
   Click Element    id = submit-auction-btn
 
-
 Пошук тендера по ідентифікатору
     [Arguments]    ${username}  ${tender_uaid}
     Switch Browser    ${username}
@@ -354,6 +355,14 @@ Login
 
 Отримати інформацію про tenderAttempts
     ${return_value}=    Отримати текст із поля і показати на сторінці    tenderAttempts
+    [Return]    "${return_value}"
+
+Отримати інформацію про tender.data.auctionUrl
+    ${return_value}=    Отримати текст із поля і показати на сторінці    tender.data.auctionUrl
+    [Return]    ${return_value}
+
+Отримати інформацію про bid.data.participationUr
+    ${return_value}=    Отримати текст із поля і показати на сторінці    bid.data.participationUr
     [Return]    ${return_value}
 
 Отримати інформацію про eligibilityCriteria
@@ -384,14 +393,11 @@ Login
     [Arguments]  ${username}  ${tender_uaid}  ${field_name}  ${field_value}
     uisce.Пошук тендера по ідентифікатору    ${username}  ${tender_uaid}
     Click Element    id = lot-edit-btn
-    Run Keyword If    '${field_name}' == 'tenderAttempts'    Select From List By Value    id = lots-tenderattempts    ${field_value}
     Input Text    ${locator.edit.${field_name}}    ${field_value}
     Choose File    id = file-type-input    /home/wolodymyr/robot_tests/src/robot_tests.broker.uisce/test.txt
     Click Element    id=submit-auction-btn
     Sleep    10
-    Wait Until Page Contains Element    id = auction-title    15
-    ${result_field}=    Get Text    ${locator.${field_name}}
-    Should Be Equal    ${result_field}    ${field_value}
+    Wait Until Page Contains Element    id = lots-name    15
 
 Отримати інформацію про items[${index}].quantity
     ${return_value}=    Отримати текст із поля і показати на сторінці    items[${index}].quantity
@@ -415,15 +421,15 @@ Login
     [Return]    ${return_value}
 
 Отримати інформацію про items[${index}].classification.scheme
-    ${return_value}=    Отримати текст із поля і показати на сторінці    item[${index}].classification.scheme
+    ${return_value}=    Отримати текст із поля і показати на сторінці    items[${index}].classification.scheme
     [Return]    ${return_value}
 
 Отримати інформацію про items[${index}].classification.description
-    ${return_value}=    Отримати текст із поля і показати на сторінці    item[${index}].classification.description
+    ${return_value}=    Отримати текст із поля і показати на сторінці    items[${index}].classification.description
     [Return]    ${return_value}
 
 Отримати інформацію про value.currency
-    ${return_value}=    Get Text    id = auction-value-currency
+    ${return_value}=    Get Text    id = auction-value_currency
     [Return]    ${return_value}
 
 Отримати інформацію про value.valueAddedTaxIncluded
@@ -431,11 +437,11 @@ Login
     [Return]    ${return_value}
 
 Отримати інформацію про auctionID
-    ${return_value}=    Отримати текст із поля і показати на сторінці    auction-value_currency
+    ${return_value}=    Отримати текст із поля і показати на сторінці    tenderId
     [Return]    ${return_value}
 
 Отримати інформацію про procuringEntity.name
-    ${return_value}=    Отримати текст із поля і показати на сторінці    auction-procuringEntity_name
+    ${return_value}=    Отримати текст із поля і показати на сторінці    procuringEntity.name
     [Return]    ${return_value}
 
 Отримати інформацію про items[0].deliveryLocation.latitude
@@ -570,6 +576,14 @@ Login
     ${return_value}=    convert_date_time_to_iso    ${return_value}
     [Return]    ${return_value}
 
+Отримати інформацію про awards[0].status
+    ${return_value}=     Отримати текст із поля і показати на сторінці    awards[0].status
+    [Return]    ${return_value}
+
+Отримати інформацію про awards[1].status
+    ${return_value}=     Отримати текст із поля і показати на сторінці    awards[1].status
+    [Return]    ${return_value}
+
 Відповісти на питання
     [Arguments]  ${username}  ${tender_uaid}  ${answer_data}  ${question_id}
     uisce.Перейти до сторінки запитань    ${username}  ${tender_uaid}
@@ -598,42 +612,34 @@ Login
     [Return]    ${return_value}
 
 Подати цінову пропозицію
-    [Arguments]    @{ARGUMENTS}
-    [Documentation]    ${ARGUMENTS[0]} == username
-    ...    ${ARGUMENTS[1]} == tenderId
-    ...    ${ARGUMENTS[2]} == ${test_bid_data}
-    ...    ${ARGUMENTS[3]} == ${filepath}
-    ${amount}=    get_str    ${ARGUMENTS[2].data.value.amount}
-    uisce.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
+    [Arguments]  ${username}  ${tender_uaid}  ${bid}
+    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
     sleep    1
     Click Element    id = bid-create-btn
-    sleep    1s
-    Input Text    id=bids-value_amount    ${amount}
+    Sleep    1s
+    ConvToStr And Input Text    id=bids-value_amount    ${bid.data.value.amount}
+    Click Element    id = bids-oferta
     Click Element    id = bid-save-btn
-    Select From List By Value    id = files-type    financialLicense
-    Choose File    id = files-file
-    Click Element    id= document-upload-btn
-    Click Element    id = bid-save-btn
+    Sleep    10
     Click Element    id = bid-activate-btn
     sleep    1
-    ${resp}=    Get Value    id=bid-value_amount
-    [Return]    ${resp}
+
+ConvToStr And Input Text
+    [Arguments]  ${elem_locator}  ${smth_to_input}
+    ${smth_to_input}=  Convert To String  ${smth_to_input}
+    Input Text  ${elem_locator}  ${smth_to_input}
 
 Скасувати цінову пропозицію
     [Arguments]    @{ARGUMENTS}
     [Documentation]    ${ARGUMENTS[0]} == username
     ...    ${ARGUMENTS[1]} == tenderId
-    Go To    http://proumstrade.com.ua/bids/index
-    Wait Until Page Contains Element    id = view-bids-btn
-    Click Element    id = bid-view
     Sleep    1
     Click Element    id=bid-delete-btn
 
 Отримати інформацію із пропозиції
     [Arguments]    ${username}    ${tender_uaid}    ${field}
-    Go To    http://proumstrade.com.ua/bids/index
-    Wait Until Page Contains Element    id = bid-view
-    Click Element    id = view-btn
+    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    Click Element    id = winner-bid-link
     Wait Until Page Contains Element    id=bids-value_amount
     ${value}=    Get Value    id=bids-value_amount
     ${value}=    Convert To Number    ${value}
@@ -651,29 +657,21 @@ Login
     Click Element    id= bid-save-btn
 
 Завантажити фінансову ліцензію
-    [Arguments]    @{ARGUMENTS}
-    [Documentation]    ${ARGUMENTS[0]} == username
-    ...    ${ARGUMENTS[1]} == tenderId
-    ...    ${ARGUMENTS[2]} == ${test_bid_data}
-    ...    ${ARGUMENTS[3]} == ${filepath}
-    ${amount}=    get_str    ${ARGUMENTS[2].data.value.amount}
-    Go To    https://proumstrade.com.ua/bids/index
-    Wait Until Page Contains Element    id= bids-update
-    Click Element    id= bids-update
-    sleep    1s
+    [Arguments]  ${username}    ${tender_uaid}    ${path}
+    Sleep    1s
     Select From List By Value    id = files-type    financialLicense
-    Choose File    id = files-file    ${ARGUMENTS[3]}
+    Choose File    id = files-file    ${path}
     Click Element    id = document-upload-btn
 
 Змінити документ в ставці
-    [Arguments]  @{ARGUMENTS}
+    [Arguments]    @{ARGUMENTS}
     [Documentation]
     ...    ${ARGUMENTS[0]} ==  username
     ...    ${ARGUMENTS[1]} ==  file
     ...    ${ARGUMENTS[2]} ==  bidId
     Reload Page
-    Go To    https://proumstrade.com.ua/bids/index
-    Click Element     id = bid-update
+    uisce.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
+    Click Element    id = winner-bid-link
     Select From List By Value    id = files-type    commercialProposal
     Choose File       id = files-file    ${ARGUMENTS[1]}
     Sleep   2
@@ -681,13 +679,13 @@ Login
     Reload Page
 
 Завантажити документ в ставку
-    [Arguments]  @{ARGUMENTS}
+    [Arguments]    @{ARGUMENTS}
     [Documentation]
     ...    ${ARGUMENTS[1]} ==  file
     ...    ${ARGUMENTS[2]} ==  tenderId
     Reload Page
-    Go To    https://proumstrade.com.ua/bids/index
-    Click Element     id = bid-update
+    uisce.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
+    Click Element    id = winner-bid-link
     Select From List By Value    id = files-type    commercialProposal
     Choose File       id = files-file    ${ARGUMENTS[1]}
     Sleep   2
@@ -695,58 +693,57 @@ Login
     Reload Page
 
 Отримати посилання на аукціон для глядача
-    [Arguments]    @{ARGUMENTS}
-    Switch Browser    ${ARGUMENTS[0]}
+    [Arguments]    ${username}    ${tender_uaid}
+    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
     Wait Until Page Contains Element    id = auction-url
     Sleep    1
-    ${bid.data.participationUrl} =    Get Text    id = auction-url
-    [Return]    ${bid.data.participationUrl}
+    ${tender.data.auctionUrl}=    Get Element Attribute    xpath=//*[@id="auction-url"]/a@href
+    [Return]    ${tender.data.auctionUrl}
 
 Отримати посилання на аукціон для учасника
-    [Arguments]    @{ARGUMENTS}
-    Switch Browser    ${ARGUMENTS[0]}
-    Wait Until Page Contains Element    id = to-bid-url
+    [Arguments]    ${username}    ${tender_uaid}
+    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    Wait Until Page Contains Element    id = auction-url
     Sleep    1
-    ${tender.data.auctionUrl}=    Get Text    id=to-bid-url
-    ${tender.data.participationUrl}=    Get Text    id=to-bid-url
-    [Return]    ${tender.data.auctionUrl}
+    ${bid.data.participationUrl}=    Get Element Attribute    xpath=//*[@id="auction-url"]/a@href
+    [Return]    ${bid.data.participationUrl}
 
 Отримати інформацію із документа по індексу
     [Arguments]    ${username}    ${tender_uaid}    ${document_index}    ${field}
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    ${doc_value}=    Get Text    xpath=(//*[@id='auction-documents']/table[${document_index + 1}]//span[contains(@class, 'documentType')])
+    ${doc_value}    Get Text    xpath=(//*[@id='auction-documents']/table[${document_index + 1}]//span[contains(@class, 'documentType')])
     [Return]    ${doc_value}
 
 Отримати інформацію із документа
     [Arguments]    ${username}    ${tender_uaid}    ${doc_id}    ${field_name}
-    ${doc_value}=    Get Text    xpath=//*[contains(text(),'${doc_id}')]
+    ${doc_value}    Get Text    xpath=//*[contains(text(),'${doc_id}')]
     [Return]    ${doc_value}
 
 Отримати кількість документів в тендері
     [Arguments]    ${username}    ${tender_uaid}
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    ${tender_doc_number}=    Get Matching Xpath Count    (//*[@id='auction-documents']/table)
+    ${tender_doc_number}    Get Matching Xpath Count    (//*[@id='auction-documents']/table)
     [Return]    ${tender_doc_number}
 
 Отримати кількість документів в ставці
   [Arguments]  ${username}  ${tender_uaid}  ${bid_index}
   uisce.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-  ${bid_doc_number}=   Get Matching Xpath Count   xpath=(//*[@id='pnAwardList']/div[last()]/div/div[1]/div/div/div[2]/table)
+  ${bid_doc_number}   Get Matching Xpath Count   xpath=(//*[@id='pnAwardList']/div[last()]/div/div[1]/div/div/div[2]/table)
   [Return]  ${bid_doc_number}
 
 Отримати документ
     [Arguments]    ${username}    ${tender_uaid}    ${doc_id}
-    uisce.Пошук тендера по ідентифікатору    ${username}    ${doc_id}
+    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
     sleep    1
-    ${file_name}=    Get Text    id = document-id
-    ${url}=    Get Element Attribute    id = document-id@href
+    ${file_name}    Get Text    xpath=//*[contains(text(),'${doc_id}')]
+    ${url}    Get Element Attribute    xpath=//*[contains(text(),'${doc_id}')]@href
     download_file    ${url}    ${file_name.split('/')[-1]}    ${OUTPUT_DIR}
     [Return]    ${file_name.split('/')[-1]}
 
 Отримати дані із документу пропозиції
     [Arguments]    ${username}    ${tender_uaid}    ${bid_index}    ${document_index}    ${field}
     ${document_index}=    inc    ${document_index}
-    ${result}=    Get Text    id = document-id
+    ${result}    Get Text    id = document-id
     [Return]    ${result}
 
 Скасування рішення кваліфікаційної комісії
@@ -776,7 +773,7 @@ Login
     Sleep    1
     Wait Until Page Contains Element    id = upload-protocol-btn
     Click Element    id = upload-protocol-btn
-    Choose File    id = files-file    ${filepath}
+    Choose File    id = files-file    /home/wolodymyr/robot_tests/src/robot_tests.broker.uisce/test.txt
     Sleep    1
     Click Element    id=bid-upload-protocol
 

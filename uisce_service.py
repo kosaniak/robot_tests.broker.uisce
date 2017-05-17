@@ -63,3 +63,11 @@ def download_file(url, file_name, output_dir):
 def inc(value):
    return int(value) + 1
 
+def to_str(value):
+   return str(value)
+
+def to_int(value):
+   return int(value)
+
+def to_str(value):
+   return str(value)
