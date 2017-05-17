@@ -2,7 +2,7 @@
 Library           String
 Library           Selenium2Library
 Library           Collections
-Library         uisce_service.py
+Library           uisce_service.py
 
 *** Variables ***
 ${locator.edit.description}    id = lots-description
@@ -391,11 +391,10 @@ Login
 
 Внести зміни в тендер
     [Arguments]  ${username}  ${tender_uaid}  ${field_name}  ${field_value}
-    ${testFilePath}=    uisce_service.get_upload_file_path
     uisce.Пошук тендера по ідентифікатору    ${username}  ${tender_uaid}
     Click Element    id = lot-edit-btn
     Input Text    ${locator.edit.${field_name}}    ${field_value}
-    Choose File    id = file-type-input    ${testFilePath}
+    Choose File    id = file-type-input    /home/wolodymyr/robot_tests/src/robot_tests.broker.uisce/test.txt
     Click Element    id=submit-auction-btn
     Sleep    10
     Wait Until Page Contains Element    id = lots-name    15
@@ -768,14 +767,13 @@ ConvToStr And Input Text
 
 Завантажити протокол аукціону в авард
     [Arguments]    ${username}    ${tender_uaid}    ${filepath}    ${award_index}
-    ${testFilePath}=    get_upload_file_path
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
     Wait Until Page Contains Element    id = winner-bid-link
     Click Element    id = winner-bid-link
     Sleep    1
     Wait Until Page Contains Element    id = upload-protocol-btn
     Click Element    id = upload-protocol-btn
-    Choose File    id = files-file    ${testFilePath}
+    Choose File    id = files-file    /home/wolodymyr/robot_tests/src/robot_tests.broker.uisce/test.txt
     Sleep    1
     Click Element    id=bid-upload-protocol
 
