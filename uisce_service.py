@@ -2,6 +2,7 @@
 import pytz
 import dateutil.parser
 import urllib
+import os
 
 from datetime import datetime
 from robot.libraries.BuiltIn import BuiltIn
