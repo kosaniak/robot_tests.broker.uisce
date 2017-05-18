@@ -355,7 +355,7 @@ Login
 
 Отримати інформацію про tenderAttempts
     ${return_value}=    Отримати текст із поля і показати на сторінці    tenderAttempts
-    [Return]    "${return_value}"
+    [Return]    ${return_value}
 
 Отримати інформацію про tender.data.auctionUrl
     ${return_value}=    Отримати текст із поля і показати на сторінці    tender.data.auctionUrl
@@ -391,10 +391,11 @@ Login
 
 Внести зміни в тендер
     [Arguments]  ${username}  ${tender_uaid}  ${field_name}  ${field_value}
+    ${testFilePath}=    get_upload_file_path
     uisce.Пошук тендера по ідентифікатору    ${username}  ${tender_uaid}
     Click Element    id = lot-edit-btn
     Input Text    ${locator.edit.${field_name}}    ${field_value}
-    Choose File    id = file-type-input    /home/wolodymyr/robot_tests/src/robot_tests.broker.uisce/test.txt
+    Choose File    id = file-type-input    ${testFilePath}
     Click Element    id=submit-auction-btn
     Sleep    10
     Wait Until Page Contains Element    id = lots-name    15
@@ -767,13 +768,14 @@ ConvToStr And Input Text
 
 Завантажити протокол аукціону в авард
     [Arguments]    ${username}    ${tender_uaid}    ${filepath}    ${award_index}
+    ${testFilePath}=    get_upload_file_path
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
     Wait Until Page Contains Element    id = winner-bid-link
     Click Element    id = winner-bid-link
     Sleep    1
     Wait Until Page Contains Element    id = upload-protocol-btn
     Click Element    id = upload-protocol-btn
-    Choose File    id = files-file    /home/wolodymyr/robot_tests/src/robot_tests.broker.uisce/test.txt
+    Choose File    id = files-file    ${testFilePath}
     Sleep    1
     Click Element    id=bid-upload-protocol
 
