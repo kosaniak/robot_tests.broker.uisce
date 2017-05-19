@@ -82,12 +82,12 @@ ${locator.questions[4].title}    id = question[4].title
 ${locator.questions[4].description}    id=question[4].description
 ${locator.questions[4].date}    id = question[4].date
 ${locator.questions[4].answer}    id = question[3].answer
-${locator.cancellations[1].status}    id = status
-${locator.cancellations[1].reason}    id = messages-notes
+${locator.cancellations[0].status}    id = cancellation-status
+${locator.cancellations[0].reason}    id = cancellaltion-reason
 ${locator.contracts.status}    css=.contract_status
 ${locator.procuringEntity.contactPoint.name}    id = lots-ownername
-${locator.awards[0].status}    id = winner-status
-${locator.awards[1].status}    id = status
+${locator.awards[0].status}    id = award[0].status
+${locator.awards[1].status}    id = award[1].status
 
 
 *** Keywords ***
@@ -230,7 +230,7 @@ Login
     Sleep    1
     Click Element    id=lot-document-upload-btn
 
-Завантажити ілюстрацію    
+Завантажити ілюстрацію
     [Arguments]  ${username}  ${tender_uaid}  ${filepath}
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
     Click Element    id=lot-update-btn
@@ -278,23 +278,14 @@ Login
     Sleep    1
     Wait Until Element Is Visible    id=auction-auctionID    6
 
-Перейти до сторінки відмін
-    Go To    https://proumstrade.com.ua/cancelations/index
-    Wait Until Page Contains Element    id=decline-btn
-    Click Element    id=decline-btn
-    Wait Until Page Contains Element    id=decline-id
-
 Отримати інформацію про cancellations[0].status
-    Перейти до сторінки відмін
-    Wait Until Page Contains Element    id = status
-    ${return_value}=    Get text    id = status
+    Wait Until Page Contains Element    id = cancellation-status
+    ${return_value}=    Get text    id = cancellation-status
     [Return]    ${return_value}
 
 Отримати інформацію про cancellations[0].reason
-    Перейти до сторінки відмін
-    Wait Until Page Contains Element    id = modal-btn
-    Click Element    id = modal-btn
-    ${return_value}=    Get text    id = messages-notes
+    Wait Until Page Contains Element    id = cancellation-reason
+    ${return_value}=    Get text    id = cancellation-reason
     [Return]    ${return_value}
 
 Оновити сторінку з тендером
@@ -354,7 +345,8 @@ Login
     [Return]    ${return_value}
 
 Отримати інформацію про tenderAttempts
-    ${return_value}=    Отримати текст із поля і показати на сторінці    tenderAttempts
+    ${data}=    Отримати текст із поля і показати на сторінці    tenderAttempts
+    ${return_value}=    to_int    ${data}
     [Return]    ${return_value}
 
 Отримати інформацію про tender.data.auctionUrl
@@ -461,8 +453,8 @@ Login
     [Return]    ${return_value}
 
 Отримати інформацію про auctionPeriod.endDate
-    ${date_value}=    Get Text    auction-auctionPeriod_endDate
-    ${return_value}=    convert_date_to_iso    ${date_value}
+    ${date_value}=    Get Text    convert_date_to_iso    auction-auctionPeriod_endDate
+    ${return_value}=    ${date_value}
 
 Отримати інформацію про tenderPeriod.startDate
     ${date_value}=    Get Text    auction-tenderPeriod_startDate
@@ -640,7 +632,7 @@ ConvToStr And Input Text
 Отримати інформацію із пропозиції
     [Arguments]    ${username}    ${tender_uaid}    ${field}
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    Click Element    id = winner-bid-link
+    Click Element    id =bids[0].link
     Wait Until Page Contains Element    id=bids-value_amount
     ${value}=    Get Value    id=bids-value_amount
     ${value}=    Convert To Number    ${value}
@@ -669,10 +661,10 @@ ConvToStr And Input Text
     [Documentation]
     ...    ${ARGUMENTS[0]} ==  username
     ...    ${ARGUMENTS[1]} ==  file
-    ...    ${ARGUMENTS[2]} ==  bidId
+    ...    ${ARGUMENTS[2]} ==  award_index
     Reload Page
     uisce.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
-    Click Element    id = winner-bid-link
+    Click Element    id = bids[${ARGUMENTS[2]}].link
     Select From List By Value    id = files-type    commercialProposal
     Choose File       id = files-file    ${ARGUMENTS[1]}
     Sleep   2
@@ -683,10 +675,9 @@ ConvToStr And Input Text
     [Arguments]    @{ARGUMENTS}
     [Documentation]
     ...    ${ARGUMENTS[1]} ==  file
-    ...    ${ARGUMENTS[2]} ==  tenderId
+    ...    ${ARGUMENTS[2]} ==  award_index
     Reload Page
-    uisce.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
-    Click Element    id = winner-bid-link
+    Click Element    id = bids[${ARGUMENTS[2]}].link
     Select From List By Value    id = files-type    commercialProposal
     Choose File       id = files-file    ${ARGUMENTS[1]}
     Sleep   2
@@ -694,16 +685,16 @@ ConvToStr And Input Text
     Reload Page
 
 Отримати посилання на аукціон для глядача
-    [Arguments]    ${username}    ${tender_uaid}
-    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
+    uisce.Пошук тендера по ідентифікатору   ${username}  ${tender_uaid}
     Wait Until Page Contains Element    id = auction-url
     Sleep    1
     ${tender.data.auctionUrl}=    Get Element Attribute    xpath=//*[@id="auction-url"]/a@href
     [Return]    ${tender.data.auctionUrl}
 
 Отримати посилання на аукціон для учасника
-    [Arguments]    ${username}    ${tender_uaid}
-    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    [Arguments]  ${username}  ${tender_uaid}
+    uisce.Пошук тендера по ідентифікатору   ${username}  ${tender_uaid}
     Wait Until Page Contains Element    id = auction-url
     Sleep    1
     ${bid.data.participationUrl}=    Get Element Attribute    xpath=//*[@id="auction-url"]/a@href
@@ -755,11 +746,30 @@ ConvToStr And Input Text
     Sleep    2
     Click Element    id = cancel-bid-btn
 
+Скасувати закупівлю
+    [Arguments]  @{ARGUMENTS}
+    [Documentation]
+    ...      ${ARGUMENTS[0]} = username
+    ...      ${ARGUMENTS[1]} = tenderUaId
+    ...      ${ARGUMENTS[2]} = cancellation_reason
+    ...      ${ARGUMENTS[3]} = doc_path
+    ...      ${ARGUMENTS[4]} = description
+    Go To    https://proumstrade.com.ua/lots/index
+    Sleep   2
+    Input Text    name = LotSearch[auctionID]    ${ARGUMENTS[1]}
+    Click Element    name = LotSearch[name]
+    Click Element    id = view-btn
+    Sleep    2
+    Click Element    id = cancel-auction-btn
+    Input text    id = cancellations-reason    ${ARGUMENTS[2]}
+    Choose File    id = cancellations-files    ${ARGUMENTS[3]}
+    Click Element    id = confirm-cancellation-btn
+
 Завантажити документ рішення кваліфікаційної комісії
     [Arguments]    ${username}    ${filepath}    ${tender_uaid}    ${award_num}
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    Wait Until Page Contains Element    id = winner-bid-link
-    Click Element    id = winner-bid-link
+    Wait Until Page Contains Element    id = bids[${award_num}].link
+    Click Element    id = bids[${award_num}].link
     Click Element    id = disqualify-link
     Choose File    id = files-file    ${filepath}
     Sleep    1
@@ -770,8 +780,8 @@ ConvToStr And Input Text
     [Arguments]    ${username}    ${tender_uaid}    ${filepath}    ${award_index}
     ${testFilePath}=    get_upload_file_path
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    Wait Until Page Contains Element    id = winner-bid-link
-    Click Element    id = winner-bid-link
+    Wait Until Page Contains Element    id = bids[${award_index}].link
+    Click Element    id = bids[${award_index}].link
     Sleep    1
     Wait Until Page Contains Element    id = upload-protocol-btn
     Click Element    id = upload-protocol-btn
@@ -782,8 +792,8 @@ ConvToStr And Input Text
 Підтвердити постачальника
     [Arguments]  ${username}  ${tender_uaid}  ${award_num}
     uisce.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-    Wait Until Page Contains Element      id = winner-bid-link
-    Click Element    id = winner-bid-link
+    Wait Until Page Contains Element      id = bids[${award_index}].link
+    Click Element    id = bids[${award_index}].link
     Wait Until Page Contains Element      id = confirm-payment-btn
     Click Element    id = confirm-payment-btn
     Sleep    1
@@ -791,10 +801,10 @@ ConvToStr And Input Text
 Завантажити угоду до тендера
     [Arguments]    ${username}    ${tender_uaid}    ${contract_num}    ${filepath}
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    Wait Until Page Contains Element    id = winner-bid-link
-    Click Element    id = winner-bid-link
+    Wait Until Page Contains Element    name = winner
+    Click Element    name = winner
     Wait Until Page Contains Element    id = upload-contract-link
-    Click Element    id = winner-bid-link
+    Click Element    name = winner
     Choose File    id = files-file    ${filepath}
     Sleep    1
     Click Element    id = upload-contract-btn
@@ -803,15 +813,14 @@ ConvToStr And Input Text
 Підтвердити наявність протоколу аукціону
     [Arguments]  ${username}  ${tender_uaid}  ${award_index}
     uisce.Пошук тендера по ідентифікатору    ${username}  ${tender_uaid}
-    Wait Until Page Contains Element    id = winner-bid-link
-    Click Element    id = winner-bid-link
+    Wait Until Page Contains Element    name = winner
+    Click Element    name = winner
     Click Element    id = confirm-protocol-btn
 
 Підтвердити підписання контракту
     [Arguments]    ${username}    ${tender_uaid}    ${contract_num}
     ${file_path}    ${file_title}    ${file_content}=    create_fake_doc
     Sleep    1
-    uisce.Завантажити угоду до тендера    ${username}    ${tender_uaid}    1    ${filepath}
     Wait Until Page Contains Element    id = contract-signed-btn
     Click Element    id = contract-signed-btn
     Click Element    id = contract-signed-submit
@@ -819,7 +828,7 @@ ConvToStr And Input Text
 Дискваліфікувати постачальника
   [Arguments]  ${username}  ${tender_uaid}  ${award_num}  ${description}
   uisce.Пошук тендера по ідентифікатору    ${username}  ${tender_uaid}
-  Wait Until Page Contains Element    id = winner-bid-link
-  Click Element    id = winner-bid-link
-  Input text          id = awards-disqualification    ${description}
+  Wait Until Page Contains Element    id = bids[${award_num}].link
+  Click Element    id = bids[${award_num}].link
+  Input text          id = disqualify-link    ${description}
   Click Element       id = upload-disqualification-btn
