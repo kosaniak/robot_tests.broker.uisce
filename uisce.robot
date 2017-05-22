@@ -569,22 +569,9 @@ Login
     ${return_value}=    convert_date_time_to_iso    ${return_value}
     [Return]    ${return_value}
 
-Отримати інформацію про awards[0].status
-    ${return_value}=     Отримати текст із поля і показати на сторінці    awards[0].status
+Отримати інформацію про awards[${index}].status
+    ${return_value}=     Отримати текст із поля і показати на сторінці    awards[${index}].status
     [Return]    ${return_value}
-
-Отримати інформацію про awards[1].status
-    ${return_value}=     Отримати текст із поля і показати на сторінці    awards[1].status
-    [Return]    ${return_value}
-
-Відповісти на питання
-    [Arguments]  ${username}  ${tender_uaid}  ${answer_data}  ${question_id}
-    uisce.Перейти до сторінки запитань    ${username}  ${tender_uaid}
-    Click Element    id = question[${question_id}].answer
-    Sleep    1
-    Input Text    id=questions-answer    ${answer_data.data.answer}
-    Click Element    id=create-question-btn
-    Click Element    id = tab-selector-2
 
 Відповісти на запитання
     [Arguments]  ${username}  ${tender_uaid}  ${answer_data}  ${question_id}
@@ -792,8 +779,8 @@ ConvToStr And Input Text
 Підтвердити постачальника
     [Arguments]  ${username}  ${tender_uaid}  ${award_num}
     uisce.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
-    Wait Until Page Contains Element      id = bids[${award_index}].link
-    Click Element    id = bids[${award_index}].link
+    Wait Until Page Contains Element      id = bids[${award_num}].link
+    Click Element    id = bids[${award_num}].link
     Wait Until Page Contains Element      id = confirm-payment-btn
     Click Element    id = confirm-payment-btn
     Sleep    1
