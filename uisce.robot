@@ -573,15 +573,6 @@ Login
     ${return_value}=     Отримати текст із поля і показати на сторінці    awards[${index}].status
     [Return]    ${return_value}
 
-Відповісти на питання
-    [Arguments]  ${username}  ${tender_uaid}  ${answer_data}  ${question_id}
-    uisce.Перейти до сторінки запитань    ${username}  ${tender_uaid}
-    Click Element    id = question[${question_id}].answer
-    Sleep    1
-    Input Text    id=questions-answer    ${answer_data.data.answer}
-    Click Element    id=create-question-btn
-    Click Element    id = tab-selector-2
-
 Відповісти на запитання
     [Arguments]  ${username}  ${tender_uaid}  ${answer_data}  ${question_id}
     uisce.Перейти до сторінки запитань    ${username}  ${tender_uaid}
