@@ -510,11 +510,6 @@ Login
     ${return_value}=     Отримати текст із поля і показати на сторінці    auction[1].status
     [Return]    ${return_value}
 
-Перейти до сторінки запитань
-    [Arguments]    ${username}    ${tender_uaid}
-    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    Click Element    id = tab-selector-2
-
 Задати питання
     [Arguments]    @{ARGUMENTS}
     [Documentation]    ${ARGUMENTS[0]} == username
@@ -581,6 +576,11 @@ Login
     Sleep    1
     Input Text    id=questions-answer    ${answer_data.data.answer}
     Click Element    id=create-question-btn
+    Click Element    id = tab-selector-2
+
+Перейти до сторінки запитань
+    [Arguments]    ${username}    ${tender_uaid}
+    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
     Click Element    id = tab-selector-2
 
 Отримати інформацію із запитання
@@ -817,6 +817,7 @@ ConvToStr And Input Text
 Підтвердити підписання контракту
     [Arguments]    ${username}    ${tender_uaid}    ${contract_num}
     ${file_path}    ${file_title}    ${file_content}=    create_fake_doc
+    uisce.Пошук тендера по ідентифікатору    ${username}  ${tender_uaid}
     Sleep    1
     Wait Until Page Contains Element    name = winner
     Click Element    name = winner
@@ -830,5 +831,5 @@ ConvToStr And Input Text
   Wait Until Page Contains Element    id = bids[${award_num}].link
   Click Element    id = bids[${award_num}].link
   Click Element    id = disqualify-link
-  Input text          id = disqualify-description    ${description}
+  Input text          id = awards-description    ${description}
   Click Element       id = upload-disqualification-btn
