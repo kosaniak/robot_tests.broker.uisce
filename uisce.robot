@@ -174,7 +174,6 @@ Login
     \       Додати предмет    ${items[${index}]}          ${index}
     Sleep    1
     Click Element    id = submissive-btn
-    Wait Until Page Contains    Успішно оновлено    10
     Click Element    id =publish-btn
     Wait Until Page Contains    Аукціон опубліковано
     ${tender_id}=    Get Text    id = auction-id
@@ -696,7 +695,8 @@ ConvToStr And Input Text
 
 Отримати інформацію із документа
     [Arguments]    ${username}    ${tender_uaid}    ${doc_id}    ${field_name}
-    ${doc_value}    Get Text    xpath=//*[contains(text(),'${doc_id}')]
+    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    ${doc_value}    Get Text    name = ${field_name}
     [Return]    ${doc_value}
 
 Отримати кількість документів в тендері
