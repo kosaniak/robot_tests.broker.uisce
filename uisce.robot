@@ -86,8 +86,8 @@ ${locator.cancellations[0].status}    id = cancellation-status
 ${locator.cancellations[0].reason}    id = cancellaltion-reason
 ${locator.contracts.status}    css=.contract_status
 ${locator.procuringEntity.contactPoint.name}    id = lots-ownername
-${locator.awards[0].status}    id = award[0].status
-${locator.awards[1].status}    id = award[1].status
+${locator.awards[0].status}    id = awards[0].status
+${locator.awards[1].status}    id = awards[1].status
 
 
 *** Keywords ***
@@ -453,8 +453,9 @@ Login
     [Return]    ${return_value}
 
 Отримати інформацію про auctionPeriod.endDate
-    ${date_value}=    Get Text    convert_date_to_iso    auction-auctionPeriod_endDate
-    ${return_value}=    ${date_value}
+    ${date_value}=    Get Text    auction-auctionPeriod_endDate
+    ${return_value}=    convert_date_to_iso    ${date_value}
+    [Return]    ${return_value}
 
 Отримати інформацію про tenderPeriod.startDate
     ${date_value}=    Get Text    auction-tenderPeriod_startDate
@@ -728,8 +729,8 @@ ConvToStr And Input Text
 Скасування рішення кваліфікаційної комісії
     [Arguments]    ${username}    ${tender_uaid}    ${award_num}
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    Wait Until Page Contains Element    id = bid-link
-    Click Element    id = bid-link
+    Wait Until Page Contains Element    id = bids[${award_num}].link
+    Click Element    id = bids[${award_num}].link
     Sleep    2
     Click Element    id = cancel-bid-btn
 
@@ -746,10 +747,19 @@ ConvToStr And Input Text
     Input Text    name = LotSearch[auctionID]    ${ARGUMENTS[1]}
     Click Element    name = LotSearch[name]
     Click Element    id = view-btn
-    Sleep    2
+    Sleep    1
     Click Element    id = cancel-auction-btn
-    Input text    id = cancellations-reason    ${ARGUMENTS[2]}
-    Choose File    id = cancellations-files    ${ARGUMENTS[3]}
+    Sleep    1
+    Select From List By Value    id = cancellations-reason    ${ARGUMENTS[2]}
+    Click Element    id = create-cancellation-btn
+    Sleep    1
+    Click Element    id = add-cancellation-document
+    Sleep    1
+    Choose File    id = files-file    ${ARGUMENTS[3]}
+    Sleep    1
+    Input Text    id = cancellations-description    ${ARGUMENTS[4]}
+    Click Element    id = upload-document
+    Sleep    1
     Click Element    id = confirm-cancellation-btn
 
 Завантажити документ рішення кваліфікаційної комісії
@@ -808,6 +818,8 @@ ConvToStr And Input Text
     [Arguments]    ${username}    ${tender_uaid}    ${contract_num}
     ${file_path}    ${file_title}    ${file_content}=    create_fake_doc
     Sleep    1
+    Wait Until Page Contains Element    name = winner
+    Click Element    name = winner
     Wait Until Page Contains Element    id = contract-signed-btn
     Click Element    id = contract-signed-btn
     Click Element    id = contract-signed-submit
@@ -817,5 +829,6 @@ ConvToStr And Input Text
   uisce.Пошук тендера по ідентифікатору    ${username}  ${tender_uaid}
   Wait Until Page Contains Element    id = bids[${award_num}].link
   Click Element    id = bids[${award_num}].link
-  Input text          id = disqualify-link    ${description}
+  Click Element    id = disqualify-link
+  Input text          id = disqualify-description    ${description}
   Click Element       id = upload-disqualification-btn
