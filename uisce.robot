@@ -696,7 +696,7 @@ ConvToStr And Input Text
 Отримати інформацію із документа
     [Arguments]    ${username}    ${tender_uaid}    ${doc_id}    ${field_name}
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    ${doc_value}    Get Text    name = ${doc_id}.${field_name}
+    ${doc_value}    Get Text    xpath=(//a[contains(@name,'${field_name.${doc_id}}')])
     [Return]    ${doc_value}
 
 Отримати кількість документів в тендері
@@ -801,7 +801,7 @@ ConvToStr And Input Text
     Wait Until Page Contains Element    name = winner
     Click Element    name = winner
     Wait Until Page Contains Element    id = upload-contract-link
-    Click Element    name = winner
+    Click Element    id = upload-contract-link
     Choose File    id = files-file    ${filepath}
     Sleep    1
     Click Element    id = upload-contract-btn
