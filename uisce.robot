@@ -690,13 +690,13 @@ ConvToStr And Input Text
 Отримати інформацію із документа по індексу
     [Arguments]    ${username}    ${tender_uaid}    ${document_index}    ${field}
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    ${doc_value}    Get Text    xpath=(//a[contains(@name,${document_index}.${field})])
+    ${doc_value}    Get Text    name = ${document_index}.${field}
     [Return]    ${doc_value}
 
 Отримати інформацію із документа
     [Arguments]    ${username}    ${tender_uaid}    ${doc_id}    ${field}
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    ${doc_value}    Get Text    xpath=(//a[contains(@name,${field}.${doc_id})])
+    ${doc_value}    Get Text    xpath=(//a[contains(@name,'${field}.${doc_id}')])
     [Return]    ${doc_value}
 
 Отримати кількість документів в тендері
