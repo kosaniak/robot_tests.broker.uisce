@@ -167,7 +167,7 @@ Login
     Input text    id = lots-requires    'test'
     Input text    id = lots-notes    'test'
     Click Element    id=submit-auction-btn
-    Wait Until Page Contains    Аукціон збережено як чернетку    10
+    Sleep    2
     ${items}=    Get From Dictionary    ${ARGUMENTS[1].data}    items
     ${Items_length}=    Get Length      ${items}
     :FOR   ${index}   IN RANGE   ${Items_length}
@@ -175,7 +175,7 @@ Login
     Sleep    1
     Click Element    id = submissive-btn
     Click Element    id =publish-btn
-    Wait Until Page Contains    Аукціон опубліковано
+    Sleep    2
     ${tender_id}=    Get Text    id = auction-id
     ${TENDER}=    Get Text    id= auction-id
     log to console    ${TENDER}
@@ -696,7 +696,7 @@ ConvToStr And Input Text
 Отримати інформацію із документа
     [Arguments]    ${username}    ${tender_uaid}    ${doc_id}    ${field_name}
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
-    ${doc_value}    Get Text    name = ${field_name}
+    ${doc_value}    Get Text    name = ${doc_id}.${field_name}
     [Return]    ${doc_value}
 
 Отримати кількість документів в тендері
@@ -826,10 +826,12 @@ ConvToStr And Input Text
     Click Element    id = contract-signed-submit
 
 Дискваліфікувати постачальника
-  [Arguments]  ${username}  ${tender_uaid}  ${award_num}  ${description}
-  uisce.Пошук тендера по ідентифікатору    ${username}  ${tender_uaid}
-  Wait Until Page Contains Element    id = bids[${award_num}].link
-  Click Element    id = bids[${award_num}].link
-  Click Element    id = disqualify-link
-  Input text          id = awards-description    ${description}
-  Click Element       id = upload-disqualification-btn
+    [Arguments]  ${username}  ${tender_uaid}  ${award_num}  ${description}
+    ${testFilePath}=    get_upload_file_path
+    uisce.Пошук тендера по ідентифікатору    ${username}  ${tender_uaid}
+    Wait Until Page Contains Element    id = bids[${award_num}].link
+    Click Element    id = bids[${award_num}].link
+    Click Element    id = disqualify-link
+    Input text          id = awards-description    ${description}
+    Choose File    id = files-file    ${testFilePath}
+    Click Element       id = upload-disqualification-btn
