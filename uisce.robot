@@ -576,7 +576,6 @@ Login
 Відповісти на запитання
     [Arguments]  ${username}  ${tender_uaid}  ${answer_data}  ${question_id}
     uisce.Перейти до сторінки запитань    ${username}  ${tender_uaid}
-    Wait Until Page Contains Element    id = question[${question_id}].answer    20
     Click Element    id = question[${question_id}].answer
     Sleep    3
     Input Text    id=questions-answer    ${answer_data.data.answer}
@@ -586,6 +585,7 @@ Login
 Перейти до сторінки запитань
     [Arguments]    ${username}    ${tender_uaid}
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    Sleep    10
     Click Element    id = tab-selector-2
 
 Отримати інформацію із запитання
@@ -739,7 +739,7 @@ ConvToStr And Input Text
     Sleep    20
     uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
     Wait Until Page Contains Element    id = bids[${award_num}].link
-    Click Element    name = bids[${award_num}].link
+    Click Element    id = bids[${award_num}].link
     Sleep    2
     Click Element    id = cancel-bid-btn
 
