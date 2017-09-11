@@ -317,6 +317,7 @@ Login
 Отримати інформацію із тендера
     [Arguments]    @{ARGUMENTS}
     [Documentation]    ${ARGUMENTS[0]} == username
+    ...    ${ARGUMENTS[1]} == tender_uaid
     ...    ${ARGUMENTS[2]} == fieldname
     ${return_value}=    Run Keyword    Отримати інформацію про ${ARGUMENTS[2]}
     [Return]    ${return_value}
@@ -603,7 +604,6 @@ Login
     sleep    2
     Click Element    id = bid-create-btn
     Sleep    2s
-    ConvToStr And Input Text    id=bids-value_amount    ${bid.data.value.amount}
     Click Element    id = bids-oferta
     Click Element    id = bid-save-btn
     Sleep    10
@@ -645,6 +645,7 @@ ConvToStr And Input Text
 Завантажити фінансову ліцензію
     [Arguments]  ${username}    ${tender_uaid}    ${path}
     Sleep    1s
+    Click Element    id = bid-create-btn
     Select From List By Value    id = files-type    financialLicense
     Choose File    id = files-file    ${path}
     Click Element    id = document-upload-btn
@@ -688,9 +689,9 @@ ConvToStr And Input Text
 Отримати посилання на аукціон для учасника
     [Arguments]  ${username}  ${tender_uaid}
     uisce.Пошук тендера по ідентифікатору   ${username}  ${tender_uaid}
-    Wait Until Page Contains Element    id = auction-url
+    Click Element    id = bid-create-btn
     Sleep    1
-    ${bid.data.participationUrl}=    Get Element Attribute    xpath=//*[@id="auction-url"]/a@href
+    ${bid.data.participationUrl}=    Get Element Attribute    id = to-bid-url@href
     [Return]    ${bid.data.participationUrl}
 
 Отримати інформацію із документа по індексу
