@@ -687,7 +687,7 @@ ConvToStr And Input Text
     [Return]    ${tender.data.auctionUrl}
 
 Отримати посилання на аукціон для учасника
-    [Arguments]  ${username}  ${tender_uaid}
+    [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
     uisce.Пошук тендера по ідентифікатору   ${username}  ${tender_uaid}
     Click Element    id = bid-create-btn
     Sleep    1
