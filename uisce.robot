@@ -92,11 +92,14 @@ ${locator.awards[1].status}    id = awards[1].status
 
 *** Keywords ***
 Підготувати клієнт для користувача
-    [Arguments]    @{ARGUMENTS}
-    Open Browser    ${USERS.users['${ARGUMENTS[0]}'].homepage}    ${USERS.users['${ARGUMENTS[0]}'].browser}    alias=${ARGUMENTS[0]}
-    Set Window Size    @{USERS.users['${ARGUMENTS[0]}'].size}
-    Set Window Position    @{USERS.users['${ARGUMENTS[0]}'].position}
-    Run Keyword If    '${ARGUMENTS[0]}' != 'uisce_Viewer'    Login    ${ARGUMENTS[0]}
+    [Arguments]    ${username}
+    ${alias}=   Catenate   SEPARATOR=   role_  ${username}
+    Set Global Variable   ${BROWSER_ALIAS}   ${alias}
+
+    Open Browser    ${USERS.users['${username}'].homepage}    ${USERS.users['${username}'].browser}    alias=${BROWSER_ALIAS}
+    Set Window Size    @{USERS.users['${username}'].size}
+    Set Window Position    @{USERS.users['${username}'].position}
+    Run Keyword If    '${username}' != 'uisce_Viewer'    Login    ${username}
 
 Підготувати дані для оголошення тендера
     [Arguments]    ${username}    ${tender_data}    ${role_name}
@@ -142,7 +145,7 @@ Login
     ${unit}=    Get From Dictionary    ${items[0].unit}    code
     ${cav_id}=    Get From Dictionary    ${items[0].classification}    id
     ${quantity}=    get_quantity    ${items[0]}
-    Switch Browser    ${ARGUMENTS[0]}
+    Switch Browser    ${BROWSER_ALIAS}
     Wait Until Page Contains Element    id=cabinet    3
     Click Element    id=cabinet
     Wait Until Page Contains Element    id=create-auction-btn    20
@@ -270,7 +273,7 @@ Login
 
 Пошук тендера по ідентифікатору
     [Arguments]    ${username}  ${tender_uaid}
-    Switch Browser    ${username}
+    Switch Browser    ${BROWSER_ALIAS}
     Go to    ${USERS.users['${username}'].default_page}
     Wait Until Page Contains Element    name = Auctions[auctionID]
     Input Text    name = Auctions[auctionID]    ${tender_uaid}
@@ -296,7 +299,7 @@ Login
     [Arguments]    @{ARGUMENTS}
     [Documentation]    ${ARGUMENTS[0]} = username
     ...    ${ARGUMENTS[1]} = ${TENDER_UAID}
-    Switch Browser    ${ARGUMENTS[0]}
+    Switch Browser    ${BROWSER_ALIAS}
     uisce.Пошук тендера по ідентифікатору    ${ARGUMENTS[0]}    ${ARGUMENTS[1]}
 
 Отримати інформацію із предмету
