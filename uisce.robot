@@ -649,6 +649,11 @@ ConvToStr And Input Text
     [Arguments]  ${username}    ${tender_uaid}    ${path}
     Sleep    1s
     Click Element    id = bid-create-btn
+    Sleep    2s
+    Click Element    id = bids-oferta
+    Sleep    1s
+    Click Element    id = bid-save-btn
+    Sleep    2s
     Select From List By Value    id = files-type    financialLicense
     Choose File    id = files-file    ${path}
     Click Element    id = document-upload-btn
@@ -684,7 +689,6 @@ ConvToStr And Input Text
 Отримати посилання на аукціон для глядача
     [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
     Switch Browser  ${BROWSER_ALIAS}
-    uisce.Пошук тендера по ідентифікатору   ${username}  ${tender_uaid}
     Wait Until Keyword Succeeds   10 x   15 s   Run Keywords
     ...   Reload Page
     ...   AND   Element Should Be Visible   id = auction-url
@@ -695,7 +699,6 @@ ConvToStr And Input Text
 Отримати посилання на аукціон для учасника
     [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
     Switch Browser  ${BROWSER_ALIAS}
-    uisce.Пошук тендера по ідентифікатору   ${username}  ${tender_uaid}
     Wait Until Keyword Succeeds   10 x   15 s   Run Keywords
     ...   Reload Page
     ...   AND   Element Should Be Visible   id = auction-url
