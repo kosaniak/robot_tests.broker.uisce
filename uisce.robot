@@ -650,10 +650,6 @@ ConvToStr And Input Text
     Sleep    1s
     Click Element    id = bid-create-btn
     Sleep    2s
-    Click Element    id = bids-oferta
-    Sleep    1s
-    Click Element    id = bid-save-btn
-    Sleep    2s
     Select From List By Value    id = files-type    financialLicense
     Choose File    id = files-file    ${path}
     Click Element    id = document-upload-btn
