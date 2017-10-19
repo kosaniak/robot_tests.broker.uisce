@@ -688,7 +688,7 @@ ConvToStr And Input Text
     Wait Until Keyword Succeeds   10 x   15 s   Run Keywords
     ...   Reload Page
     ...   AND   Element Should Be Visible   id = auction-url
-    ${tender.data.auctionUrl}=    Get Element Attribute    xpath=//*[@id="auction-url"]/a@href
+    ${tender.data.auctionUrl}=    id = auction-url
     [Return]    ${tender.data.auctionUrl}
 
 Отримати посилання на аукціон для учасника
@@ -697,7 +697,7 @@ ConvToStr And Input Text
     Wait Until Keyword Succeeds   10 x   15 s   Run Keywords
     ...   Reload Page
     ...   AND   Element Should Be Visible   id = auction-url
-    ${tender.data.auctionUrl}=    Get Element Attribute    xpath=//*[@id="auction-url"]/a@href
+    ${tender.data.auctionUrl}=    Get Text    id = auction-url
     [Return]    ${tender.data.auctionUrl}
 
 Отримати інформацію із документа по індексу
