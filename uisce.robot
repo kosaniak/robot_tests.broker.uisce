@@ -685,20 +685,14 @@ ConvToStr And Input Text
 Отримати посилання на аукціон для глядача
     [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
     Switch Browser  ${BROWSER_ALIAS}
-    Wait Until Keyword Succeeds   10 x   15 s   Run Keywords
-    ...   Reload Page
-    ...   AND   Element Should Be Visible   id = auction-url
-    Sleep    1
+    Wait Until Page Contains Element    id=auction-url
     ${tender.data.auctionUrl}=    Get Element Attribute    xpath=//*[@id="auction-url"]/a@href
     [Return]    ${tender.data.auctionUrl}
 
 Отримати посилання на аукціон для учасника
     [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
     Switch Browser  ${BROWSER_ALIAS}
-    Wait Until Keyword Succeeds   10 x   15 s   Run Keywords
-    ...   Reload Page
-    ...   AND   Element Should Be Visible   id = auction-url
-    Sleep    1
+    Wait Until Page Contains Element    id=auction-url
     ${tender.data.auctionUrl}=    Get Element Attribute    xpath=//*[@id="auction-url"]/a@href
     [Return]    ${tender.data.auctionUrl}
 
