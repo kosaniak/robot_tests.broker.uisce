@@ -685,19 +685,21 @@ ConvToStr And Input Text
 Отримати посилання на аукціон для глядача
     [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
     Switch Browser  ${BROWSER_ALIAS}
+    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
     Wait Until Keyword Succeeds   10 x   15 s   Run Keywords
     ...   Reload Page
-    ...   AND   Element Should Be Visible   id = to-bid-url
-    ${tender.data.auctionUrl}=    Get Element Attribute    xpath=//*[@id="to-bid-url"]/a@href
+    ...   AND   Element Should Be Visible   id = auction-url
+    ${tender.data.auctionUrl}=    Get Element Attribute    xpath=//*[@id="auction-url"]/a@href
     [Return]    ${tender.data.auctionUrl}
 
 Отримати посилання на аукціон для учасника
     [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
     Switch Browser  ${BROWSER_ALIAS}
+    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
     Wait Until Keyword Succeeds   10 x   15 s   Run Keywords
     ...   Reload Page
     ...   AND   Element Should Be Visible   id = to-bid-url
-    ${tender.data.auctionUrl}=    Get Element Attribute    xpath=//*[@id="to-bid-url"]/a@href
+    ${tender.data.auctionUrl}=    Get Element Attribute    xpath=//*[@id="auction-url"]/a@href
     [Return]    ${tender.data.auctionUrl}
 
 Отримати інформацію із документа по індексу
