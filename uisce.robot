@@ -1048,6 +1048,22 @@ uisce.Отримати інформацію з пропозиції шодо val
     Натиснути    id=bid-upload-protocol
     Sleep    3
 
+Завантажити протокол погодження в авард
+    [Arguments]    ${username}    ${tender_uaid}    ${filepath}    ${award_index}
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    Натиснути    id=bids[0]-link
+    Натиснути    id=upload-admission-btn
+    ${filepath}=    get_upload_file_path
+    Choose file    id=files-file    ${filepath}
+    Натиснути    id=bid-upload-admission
+    Sleep    3
+
+Активувати кваліфікацію учасника
+    [Arguments]    ${username}    ${tender_uaid}
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    Натиснути    id=bids[0]-link
+    Натиснути    id=confirm-admission-btn
+
 Підтвердити постачальника
     [Arguments]    ${username}    ${tender_uaid}    ${award_num}
     Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
@@ -1072,6 +1088,11 @@ uisce.Отримати інформацію з пропозиції шодо val
 Встановити дату підписання угоди
     [Arguments]    ${username}    ${tender_uaid}    ${contract_num}    ${field_value}
     Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    Натиснути    id=bids[0]-link
+    Натиснути    id=contract-signed-btn
+    Input text    id=contracts-datesigned    ${field_value}
+    Натиснути    id=contract-signed-submit
+    Sleep    3
 
 Завантажити угоду до тендера
     [Arguments]    ${username}    ${tender_uaid}    ${contract_num}    ${filepath}
@@ -1107,3 +1128,9 @@ uisce.Отримати інформацію з пропозиції шодо val
     Натиснути    id=bids[0]-link
     Натиснути    id=confirm-declining-contract
     Sleep    3
+
+Отримати кількість авардів в тендері
+    [Arguments]    ${username}    ${tender_uaid}
+    ${awards_count}=    Get text    id=awards-count
+    ${awards_count}=    Convert to number    ${awards_count}
+    [Return]    ${awards_count}
