@@ -50,7 +50,6 @@ Login
     Input text    id=profile-member    ${data.name}
     Input text    id=profile-phone    ${data.contactPoint.telephone}
     Input text    id=profile-email    ${data.contactPoint.email}
-    # Input text    id=profile-zkpo    ${data.identifier.id}
     Натиснути    id=save-btn
     Sleep    2
 
@@ -128,7 +127,6 @@ Login
 
     Input text    id=organizations-name    ${assetHoldername}
     Input text    id=organizations-identifier_id    ${assetHolder_identifier_id}
-    # Select from list by value    id=organizations-identifier_scheme    ${assetHolder_identifier_scheme}
     Input text    id=organizations-identifier_legalname    ${assetHolder_identifier_legalName}
 
     Input text    id=organizations-contactpoint_email    ${assetHolder_ContactPoint_email}
@@ -176,14 +174,15 @@ Login
     Input text    id = items-description_en    ${item.description_en}
     Input text    id = items-quantity    ${quantity}
     Select from list by value    id = items-unit_code    ${item.unit.code}
-    Select from list by value    id = items-additionalclassifications    ${item.additionalClassifications[0].id}
     Input text    id = items-address_locality    ${item.address.locality}
     Input text    id = items-address_postalcode    ${item.address.postalCode}
     Select from list by value    id = items-address_region    ${item.address.region}
     Input text    id = items-address_streetaddress    ${item.address.streetAddress}
-    Input text    id = items-classification_id    ${item.classification.id}
+    Input text    id = search-c    ${item.classification.id}
+    Натиснути    //a[contains(text(), '${item.classification.id}') and contains(@class, 'jstree-search')]/*[1]
+    Sleep    1
 
-    Натиснути    id = save-btn
+    Неквапливо натиснути    id = save-btn
 
 Оновити дані
     Натиснути    id=refresh-btn
@@ -215,6 +214,15 @@ Login
 Пошук об’єкта МП по ідентифікатору
     [Arguments]    ${username}    ${tender_uaid}
     Run keyword    uisce.Оновити сторінку з об'єктом МП    ${username}    ${tender_uaid}
+
+Отримати інформацію з активу в договорі
+    [Arguments]    ${username}    ${contract_uaid}    ${item_id}    ${field_name}
+    ${return_value}=    Run Keyword    uisce.Отримати інформацію з активу ${item_id} контракту про ${field_name}
+    [Return]    ${return_value}
+
+Отримати інформацію з активу ${item_id} контракту про ${field_name}
+    ${return_value}=    Отримати текст    id=items[${item_id}].${field_name}
+    [Return]    ${return_value}
 
 Отримати інформацію із об'єкта МП
     [Arguments]    ${username}    ${tender_uaid}    ${field_name}
@@ -873,6 +881,10 @@ Login
     ${return_value}=    Отримати текст    id=items[${index}].unit_name
     [Return]    ${return_value}
 
+Отримати значення поля items[${index}].description тендеру
+    ${return_value}=    Отримати текст    id=items[${index}].description
+    [Return]    ${return_value}
+
 Отримати інформацію із запитання
     [Arguments]    ${username}    ${tender_uaid}    ${question_id}    ${field_name}
     Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
@@ -1020,7 +1032,6 @@ uisce.Отримати інформацію з пропозиції шодо val
     Choose file    id=files-file    ${filepath}
     Натиснути    id=document-upload-btn
 
-
 Змінити цінову пропозицію
     [Arguments]    ${username}    ${tender_uaid}    ${fieldname}    ${field_value}
     Натиснути    id=bid-update-btn
@@ -1035,3 +1046,176 @@ uisce.Отримати інформацію з пропозиції шодо val
     Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
     ${return_value}=    Отримати текст    id=auction-url
     [Return]    ${return_value}
+
+Завантажити протокол аукціону в авард
+    [Arguments]    ${username}    ${tender_uaid}    ${filepath}    ${award_index}
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    Натиснути    id=bids[0]-link
+    Натиснути    id=upload-protocol-btn
+    ${filepath}=    get_upload_file_path
+    Choose file    id=files-file    ${filepath}
+    Натиснути    id=bid-upload-protocol
+    Sleep    3
+
+Завантажити протокол погодження в авард
+    [Arguments]    ${username}    ${tender_uaid}    ${filepath}    ${award_index}
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    Натиснути    id=bids[0]-link
+    Натиснути    id=upload-admission-btn
+    ${filepath}=    get_upload_file_path
+    Choose file    id=files-file    ${filepath}
+    Натиснути    id=bid-upload-admission
+    Sleep    3
+
+Активувати кваліфікацію учасника
+    [Arguments]    ${username}    ${tender_uaid}
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    Натиснути    id=bids[0]-link
+    Натиснути    id=confirm-admission-btn
+
+Підтвердити постачальника
+    [Arguments]    ${username}    ${tender_uaid}    ${award_num}
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    Натиснути    id=bids[0]-link
+    Натиснути    id=confirm-protocol-btn
+    Sleep    3
+
+Завантажити протокол дискваліфікації в авард
+    [Arguments]    ${username}    ${tender_uaid}    ${filename}    ${award_index}
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    Натиснути    id=bids[0]-link
+    Натиснути    id=disqualify-link
+    ${filepath}=    get_upload_file_path
+    Choose file    id=files-file    ${filepath}
+
+Дискваліфікувати постачальника
+    [Arguments]    ${username}    ${tender_uaid}    ${award_index}    ${description}
+    Input text    id=awards-description    ${description}
+    Натиснути    id=upload-disqualification-btn
+    Sleep    3
+
+Встановити дату підписання угоди
+    [Arguments]    ${username}    ${tender_uaid}    ${contract_num}    ${field_value}
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    Натиснути    id=bids[0]-link
+    Натиснути    id=contract-signed-btn
+    Input text    id=contracts-datesigned    ${field_value}
+    Натиснути    id=contract-signed-submit
+    Sleep    3
+
+Завантажити угоду до тендера
+    [Arguments]    ${username}    ${tender_uaid}    ${contract_num}    ${filepath}
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    Натиснути    id=bids[0]-link
+    Натиснути    id=upload-contract-link
+    ${filepath}=    get_upload_file_path
+    Choose file    id=files-file    ${filepath}
+    Натиснути    id=upload-contract-btn
+    Sleep    3
+
+Підтвердити підписання контракту
+    [Arguments]    ${username}    ${tender_uaid}    ${contract_num}
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    Натиснути    id=bids[0]-link
+    Натиснути    id=contract-signed-btn
+    Натиснути    id=contract-signed-submit
+    Sleep    3
+
+Завантажити протокол скасування в контракт
+    [Arguments]    ${username}    ${tender_uaid}    ${filepath}    ${contract_num}
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    Натиснути    id=bids[0]-link
+    Натиснути    id=contract-upload-cancellation
+    ${filepath}    get_upload_file_path
+    Choose file    id=files-file    ${filepath}
+    Натиснути    id=upload-contract-btn
+    Sleep    3
+
+Скасувати контракт
+    [Arguments]    ${username}    ${tender_uaid}    ${contract_num}
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    Натиснути    id=bids[0]-link
+    Натиснути    id=confirm-declining-contract
+    Sleep    3
+
+Отримати кількість авардів в тендері
+    [Arguments]    ${username}    ${tender_uaid}
+    ${awards_count}=    Get text    id=awards-count
+    ${awards_count}=    Convert to number    ${awards_count}
+    [Return]    ${awards_count}
+
+Скасування рішення кваліфікаційної комісії
+    [Arguments]    ${username}    ${tender_uaid}    ${award_num}
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${tender_uaid}
+    Натиснути    id=bids[1]-link
+    Натиснути    id=cancel-bid-btn
+
+Активувати контракт
+    [Arguments]    ${username}    ${contract_uaid}
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${contract_uaid}
+
+Отримати інформацію із договору
+    [Arguments]    ${username}    ${contract_uaid}    ${field_name}
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${contract_uaid}
+    ${return_value}=    Отримати текст    id=contract-${field_name}
+    [Return]    ${return_value}
+
+Вказати дату отримання оплати
+    [Arguments]    ${username}    ${contract_uaid}    ${dateMet}    ${milestone_index}
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${contract_uaid}
+    Натиснути    id=bids[0]-link
+    Input text    id=milestones-datemet    ${dateMet}
+    Натиснути    id=confirm-milestone-btn
+    Sleep    3
+
+Завантажити наказ про завершення приватизації
+    [Arguments]    ${username}    ${contract_uaid}    ${filepath}
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${contract_uaid}
+    Натиснути    id=bids[0]-link
+    Select from list by value    id=milestones-type    approvalProtocol
+    Choose file    id=files-file    ${filepath}
+    Натиснути    id=upload-milestone-document-btn
+    Sleep    59
+
+Вказати дату прийняття наказу
+    [Arguments]    ${username}    ${contract_uaid}    ${dateMet}
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${contract_uaid}
+    Натиснути    id=bids[0]-link
+    Input text    id=milestones-datemet    ${dateMet}
+    Натиснути    id=confirm-milestone-btn
+    Sleep    3
+
+Вказати дату виконання умов контракту
+    [Arguments]    ${username}    ${contract_uaid}    ${dateMet}
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${contract_uaid}
+    Натиснути    id=bids[0]-link
+    Input text    id=milestones-datemet    ${dateMet}
+    Натиснути    id=confirm-milestone-btn
+    Sleep    3
+
+Підтвердити відсутність оплати
+    [Arguments]    ${username}    ${contract_uaid}    ${milestone_index}
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${contract_uaid}
+    Натиснути    id=bids[0]-link
+    Натиснути    id=decline-milestone-btn
+    Sleep    3
+
+Підтвердити відсутність наказу про приватизацію
+    [Arguments]    ${username}    ${contract_uaid}    ${filepath}
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${contract_uaid}
+    Натиснути    id=bids[0]-link
+    Select from list by value    id=milestones-type    rejectionProtocol
+    Choose file    id=files-file    ${filepath}
+    Натиснути    id=upload-milestone-document-btn
+    Sleep    3
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${contract_uaid}
+    Натиснути    id=bids[0]-link
+    Натиснути    id=decline-milestone-btn
+    Sleep    3
+
+Підтвердити невиконання умов приватизації
+    [Arguments]    ${username}    ${contract_uaid}
+    Run keyword    uisce.Пошук тендера по ідентифікатору    ${username}    ${contract_uaid}
+    Натиснути    id=bids[0]-link
+    Натиснути    id=decline-milestone-btn
+    Sleep    3
